@@ -9,7 +9,7 @@
 
         :root {
             --bg-color: #040209;
-            --panel-bg: rgba(10, 8, 26, 0.88);
+            --panel-bg: rgba(10, 8, 26, 0.92);
             --border-cyan: #00f0ff;
             --border-purple: #9d4edd;
             --text-color: #e2f1ff;
@@ -34,23 +34,10 @@
             padding: 15px;
             padding-bottom: 95px;
             background-image: 
-                radial-gradient(circle at 50% 15%, rgba(123, 44, 191, 0.25), transparent 60%),
-                radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.15), transparent 50%),
+                radial-gradient(circle at 50% 15%, rgba(123, 44, 191, 0.3), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.2), transparent 50%),
                 linear-gradient(to bottom, #040209, #090514);
             background-attachment: fixed;
-            overflow-x: hidden;
-        }
-
-        /* Lightning Canvas Background */
-        #lightning-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.6;
         }
 
         /* Fixed Navigation Bar at Bottom */
@@ -61,9 +48,9 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(8, 5, 20, 0.95);
+            background: rgba(8, 5, 20, 0.98);
             border-top: 2px solid var(--border-cyan);
-            box-shadow: 0 -5px 25px rgba(0, 240, 255, 0.3), inset 0 2px 10px rgba(157, 78, 221, 0.4);
+            box-shadow: 0 -5px 25px rgba(0, 240, 255, 0.3);
             padding: 10px 0;
             z-index: 9999;
             backdrop-filter: blur(12px);
@@ -85,29 +72,20 @@
             cursor: pointer;
             width: 33%;
             user-select: none;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .tab-btn.active {
             color: var(--border-cyan);
             text-shadow: 0 0 12px var(--border-cyan), 0 0 20px var(--purple-glow);
-            transform: translateY(-2px);
         }
 
         .tab-content {
             display: none;
-            position: relative;
-            z-index: 2;
         }
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Solo Leveling Authentic Window Panel */
@@ -115,20 +93,547 @@
             background: var(--panel-bg);
             border: 1px solid var(--border-cyan);
             box-shadow: 
-                0 0 20px rgba(0, 240, 255, 0.2), 
-                0 0 40px rgba(123, 44, 191, 0.15),
-                inset 0 0 15px rgba(0, 240, 255, 0.08);
+                0 0 20px rgba(0, 240, 255, 0.25), 
+                0 0 40px rgba(123, 44, 191, 0.2),
+                inset 0 0 15px rgba(0, 240, 255, 0.1);
             border-radius: 4px;
             padding: 18px;
             margin-bottom: 18px;
             position: relative;
         }
 
-        /* Ornamental Anime Frame Corners */
+        /* Corner Decorations */
         .system-panel::before, .system-panel::after {
             content: '';
             position: absolute;
             width: 12px;
             height: 12px;
             border: 2px solid var(--border-cyan);
-            pointer-
+            pointer-events: none;
+        }
+
+        .system-panel::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .system-panel::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+        .panel-header {
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--border-cyan);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-title::before {
+            content: 'ⓘ';
+            color: var(--accent-red);
+            font-size: 16px;
+        }
+
+        /* Rank Box */
+        .rank-box {
+            text-align: center;
+            padding: 18px 0;
+            background: radial-gradient(circle, rgba(123, 44, 191, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+            border-radius: 6px;
+            border: 1px solid rgba(157, 78, 221, 0.5);
+            margin-bottom: 16px;
+        }
+
+        .rank-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 34px;
+            font-weight: 900;
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px var(--accent-gold);
+            letter-spacing: 4px;
+        }
+
+        .rank-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            color: #00f0ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 6px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: rgba(5, 3, 15, 0.7);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            color: #8faecb;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
+
+        .stat-val {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--border-cyan);
+        }
+
+        /* Progress Bars */
+        .bar-container {
+            margin-bottom: 14px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            margin-bottom: 6px;
+            color: #a0c0e0;
+        }
+
+        .bar-bg {
+            background: rgba(0, 0, 0, 0.6);
+            height: 14px;
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 240, 255, 0.4);
+        }
+
+        .bar-fill {
+            height: 100%;
+            transition: width 0.4s ease;
+        }
+
+        .hp-fill { background: linear-gradient(90deg, #ff2a6d, #ff0055); box-shadow: 0 0 12px #ff2a6d; }
+        .mp-fill { background: linear-gradient(90deg, #00f0ff, #7b2cbf); box-shadow: 0 0 12px #00f0ff; }
+        .xp-fill { background: linear-gradient(90deg, #ffbe0b, #ff9e00); box-shadow: 0 0 12px #ffbe0b; }
+
+        /* Inputs & Buttons */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        input[type="number"] {
+            background: rgba(3, 1, 10, 0.8);
+            border: 1px solid var(--border-cyan);
+            color: #fff;
+            padding: 12px;
+            border-radius: 4px;
+            width: 100%;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(123, 44, 191, 0.3));
+            border: 1px solid var(--border-cyan);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+        }
+
+        .btn:active {
+            background: var(--border-cyan);
+            color: #000;
+        }
+
+        .btn-danger {
+            border-color: var(--accent-red);
+            background: linear-gradient(135deg, rgba(255, 42, 109, 0.3), rgba(100, 0, 30, 0.4));
+        }
+
+        /* Notifications */
+        #notification {
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-150px);
+            background: rgba(8, 4, 22, 0.96);
+            border: 2px solid var(--border-cyan);
+            box-shadow: 0 0 35px var(--border-cyan);
+            padding: 16px 30px;
+            border-radius: 6px;
+            text-align: center;
+            z-index: 10000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+
+        #notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="notification">
+        <div id="notif-title" style="font-family: 'Orbitron'; color: var(--border-cyan); font-weight: 900; font-size: 16px;">QUEST COMPLETE</div>
+        <div id="notif-desc" style="font-size: 13px; margin-top: 4px; color: #fff;">+1.0 INT | +10 MP</div>
+    </div>
+
+    <!-- TAB 1: DASHBOARD -->
+    <div id="tab-dashboard" class="tab-content active">
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">HUNTER STATUS HUD</div>
+                <div id="player-lvl" style="font-family: 'Orbitron'; font-weight: 900; color: var(--accent-gold); margin-top: 6px; font-size: 14px;">LEVEL 1</div>
+            </div>
+
+            <div class="rank-box">
+                <div class="rank-badge" id="player-rank">E-RANK</div>
+                <div class="rank-title" id="player-title">NOVICE HUNTER</div>
+            </div>
+
+            <div class="bar-container">
+                <div class="bar-label"><span>MANA (RANG-FORTSCHRITT)</span><span id="mp-text">0 / 100 MP</span></div>
+                <div class="bar-bg"><div id="mp-bar" class="bar-fill mp-fill" style="width: 0%;"></div></div>
+            </div>
+
+            <div class="bar-container">
+                <div class="bar-label"><span>SYSTEM XP</span><span id="xp-text">0 / 100 XP</span></div>
+                <div class="bar-bg"><div id="xp-bar" class="bar-fill xp-fill" style="width: 0%;"></div></div>
+            </div>
+
+            <div class="bar-container">
+                <div class="bar-label"><span>HEALTH (HP)</span><span id="hp-text">100 / 100 HP</span></div>
+                <div class="bar-bg"><div id="hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div></div>
+            </div>
+        </div>
+
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">ABILITY PARAMETERS</div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-name">STRENGTH</div>
+                    <div class="stat-val" id="stat-str">10.0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-name">ENDURANCE</div>
+                    <div class="stat-val" id="stat-end">10.0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-name">INTELLIGENCE</div>
+                    <div class="stat-val" id="stat-int">10.0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-name">FOCUS (ANTI-ADHD)</div>
+                    <div class="stat-val" id="stat-foc">10.0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="system-panel" style="display: flex; justify-content: space-between; gap: 10px;">
+            <button class="btn" style="flex: 1;" onclick="exportData()">💾 SPEICHERN</button>
+            <button class="btn" style="flex: 1;" onclick="document.getElementById('file-input').click()">📂 LADEN</button>
+            <input type="file" id="file-input" style="display: none;" onchange="importData(event)">
+        </div>
+    </div>
+
+    <!-- TAB 2: QUESTS -->
+    <div id="tab-quests" class="tab-content">
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">DAILY QUEST: READ & LEARN</div>
+            </div>
+            <div style="font-size: 13px; color: #a0c0e0; text-align: center;">1 Seite = +0.1 INT & +1 Mana (MP)</div>
+            <div class="input-group">
+                <input type="number" id="pages-input" placeholder="Gelesene Seiten...">
+                <button class="btn" onclick="logReading()">TRACK</button>
+            </div>
+        </div>
+
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">PHYSICAL TRAINING</div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                <button class="btn" style="flex: 1;" onclick="addStat('str', 1.0, 15, 'Gym Session (+1.0 STR | +15 MP)')">🏋️ GYM (+1 STR)</button>
+                <button class="btn" style="flex: 1;" onclick="addStat('end', 1.0, 15, 'Schwimmen (+1.0 END | +15 MP)')">🏊 SCHWIMMEN (+1 END)</button>
+            </div>
+        </div>
+
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">DEEP WORK FOCUS TIMER</div>
+            </div>
+            <div style="text-align: center; margin: 15px 0;">
+                <div id="timer-display" style="font-family: 'Orbitron'; font-size: 42px; font-weight: 900; letter-spacing: 3px; color: var(--border-cyan); text-shadow: 0 0 15px var(--border-cyan);">25:00</div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" style="flex: 1;" onclick="toggleTimer()" id="timer-btn">START FOKUS</button>
+                <button class="btn btn-danger" onclick="resetTimer()">RESET</button>
+            </div>
+        </div>
+
+        <div class="system-panel" style="border-color: var(--accent-red);">
+            <div class="panel-header">
+                <div class="panel-title" style="color: var(--accent-red);">PENALTY ZONE</div>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-danger" style="flex: 1;" onclick="applyPenalty('foc', 0.5, 10, 'Ablenkung (-0.5 FOC)')">📱 Social Media (-FOC)</button>
+                <button class="btn btn-danger" style="flex: 1;" onclick="applyPenalty('str', 1.0, 20, 'Gym geschwänzt (-1 STR)')">🛋️ Faulheit (-STR)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: BOSS DUNGEON -->
+    <div id="tab-boss" class="tab-content">
+        <div class="system-panel" style="text-align: center;">
+            <div class="panel-header">
+                <div class="panel-title">GATE RANK: E-DUNGEON</div>
+            </div>
+            <div style="font-family: 'Orbitron'; font-size: 26px; font-weight: 900; color: var(--accent-red); margin: 14px 0; text-shadow: 0 0 15px var(--accent-red);">GOBLIN LEADER</div>
+            <div class="bar-container">
+                <div class="bar-label"><span>BOSS HP</span><span id="boss-hp-text">500 / 500</span></div>
+                <div class="bar-bg"><div id="boss-hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div></div>
+            </div>
+            <button class="btn btn-danger" style="width: 100%; margin-top: 18px; padding: 15px; font-size: 13px;" onclick="attackBoss()">⚔️ ANGRIFF (SCHADEN DURCH STR & INT)</button>
+        </div>
+    </div>
+
+    <!-- LOWER NAVIGATION TABS -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" id="btn-dashboard" onclick="switchTab('dashboard')">
+            <span style="font-size: 20px;">🛡️</span> STATUS
+        </button>
+        <button class="tab-btn" id="btn-quests" onclick="switchTab('quests')">
+            <span style="font-size: 20px;">⚡</span> QUESTS
+        </button>
+        <button class="tab-btn" id="btn-boss" onclick="switchTab('boss')">
+            <span style="font-size: 20px;">⚔️</span> DUNGEON
+        </button>
+    </div>
+
+    <script>
+        let state = {
+            level: 1,
+            xp: 0,
+            xpMax: 100,
+            mp: 0,
+            mpMax: 100,
+            hp: 100,
+            hpMax: 100,
+            stats: { str: 10.0, end: 10.0, int: 10.0, foc: 10.0 },
+            bossHp: 500,
+            bossHpMax: 500
+        };
+
+        const ranks = [
+            { mp: 0, name: "E-RANK", title: "Novice Hunter" },
+            { mp: 100, name: "D-RANK", title: "Rookie Hunter" },
+            { mp: 300, name: "C-RANK", title: "Veteran Hunter" },
+            { mp: 600, name: "B-RANK", title: "Elite Hunter" },
+            { mp: 1000, name: "A-RANK", title: "High-Rank Hunter" },
+            { mp: 2000, name: "S-RANK", title: "Shadow Lord" },
+            { mp: 5000, name: "SHADOW MONARCH", title: "Monarch of Shadows" }
+        ];
+
+        function loadState() {
+            try {
+                const saved = localStorage.getItem('solo_leveling_v5');
+                if(saved) state = JSON.parse(saved);
+            } catch(e) { console.log(e); }
+            updateUI();
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem('solo_leveling_v5', JSON.stringify(state));
+            } catch(e) { console.log(e); }
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('player-lvl').innerText = `LEVEL ${state.level}`;
+            document.getElementById('stat-str').innerText = state.stats.str.toFixed(1);
+            document.getElementById('stat-end').innerText = state.stats.end.toFixed(1);
+            document.getElementById('stat-int').innerText = state.stats.int.toFixed(1);
+            document.getElementById('stat-foc').innerText = state.stats.foc.toFixed(1);
+
+            document.getElementById('hp-text').innerText = `${Math.round(state.hp)} / ${state.hpMax} HP`;
+            document.getElementById('hp-bar').style.width = `${(state.hp / state.hpMax) * 100}%`;
+
+            document.getElementById('xp-text').innerText = `${Math.round(state.xp)} / ${state.xpMax} XP`;
+            document.getElementById('xp-bar').style.width = `${(state.xp / state.xpMax) * 100}%`;
+
+            let currentRank = ranks[0];
+            let nextRankMp = ranks[1].mp;
+            for(let i = 0; i < ranks.length; i++) {
+                if(state.mp >= ranks[i].mp) {
+                    currentRank = ranks[i];
+                    nextRankMp = ranks[i+1] ? ranks[i+1].mp : ranks[i].mp * 2;
+                }
+            }
+            document.getElementById('player-rank').innerText = currentRank.name;
+            document.getElementById('player-title').innerText = currentRank.title;
+            state.mpMax = nextRankMp;
+
+            document.getElementById('mp-text').innerText = `${Math.round(state.mp)} / ${state.mpMax} MP`;
+            document.getElementById('mp-bar').style.width = `${Math.min(100, (state.mp / state.mpMax) * 100)}%`;
+
+            document.getElementById('boss-hp-text').innerText = `${Math.max(0, Math.round(state.bossHp))} / ${state.bossHpMax}`;
+            document.getElementById('boss-hp-bar').style.width = `${Math.max(0, (state.bossHp / state.bossHpMax) * 100)}%`;
+        }
+
+        function addStat(type, val, mpGain, msg) {
+            state.stats[type] += val;
+            state.mp += mpGain;
+            state.xp += mpGain * 1.5;
+
+            if(state.xp >= state.xpMax) {
+                state.level++;
+                state.xp -= state.xpMax;
+                state.xpMax = Math.round(state.xpMax * 1.25);
+                showNotif("LEVEL UP!", `Du hast Level ${state.level} erreicht!`);
+            } else {
+                showNotif("QUEST COMPLETE", msg);
+            }
+            saveState();
+        }
+
+        function applyPenalty(type, val, hpLoss, msg) {
+            state.stats[type] = Math.max(0, state.stats[type] - val);
+            state.hp = Math.max(0, state.hp - hpLoss);
+            showNotif("PENALTY APPLIED", msg);
+            saveState();
+        }
+
+        function logReading() {
+            const input = document.getElementById('pages-input');
+            const pages = parseFloat(input.value);
+            if(pages && pages > 0) {
+                const intGain = pages * 0.1;
+                const mpGain = Math.round(pages * 1);
+                addStat('int', intGain, mpGain, `${pages} Seiten (+${intGain.toFixed(1)} INT | +${mpGain} MP)`);
+                input.value = '';
+            }
+        }
+
+        function attackBoss() {
+            const damage = (state.stats.str * 2) + (state.stats.int * 1.5);
+            state.bossHp -= damage;
+            if(state.bossHp <= 0) {
+                showNotif("DUNGEON CLEARED!", "Goblin Leader besiegt! +100 MP");
+                state.mp += 100;
+                state.bossHpMax = Math.round(state.bossHpMax * 1.5);
+                state.bossHp = state.bossHpMax;
+            } else {
+                showNotif("CRITICAL HIT!", `Du fügst dem Boss ${Math.round(damage)} Schaden zu!`);
+            }
+            saveState();
+        }
+
+        let timerInterval = null;
+        let timeLeft = 25 * 60;
+
+        function toggleTimer() {
+            const btn = document.getElementById('timer-btn');
+            if(timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                btn.innerText = "START FOKUS";
+            } else {
+                btn.innerText = "PAUSE";
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                    const s = (timeLeft % 60).toString().padStart(2, '0');
+                    document.getElementById('timer-display').innerText = `${m}:${s}`;
+                    if(timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        timeLeft = 25 * 60;
+                        btn.innerText = "START FOKUS";
+                        addStat('foc', 1.0, 20, "25 Min Fokus (+1.0 FOC | +20 MP)");
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
+            timeLeft = 25 * 60;
+            document.getElementById('timer-display').innerText = "25:00";
+            document.getElementById('timer-btn').innerText = "START FOKUS";
+        }
+
+        function showNotif(title, desc) {
+            document.getElementById('notif-title').innerText = title;
+            document.getElementById('notif-desc').innerText = desc;
+            const notif = document.getElementById('notification');
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 2500);
+        }
+
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            contents.forEach(el => el.classList.remove('active'));
+            buttons.forEach(el => el.classList.remove('active'));
+
+            const targetContent = document.getElementById(`tab-${tabId}`);
+            const targetBtn = document.getElementById(`btn-${tabId}`);
+
+            if (targetContent) targetContent.classList.add('active');
+            if (targetBtn) targetBtn.classList.add('active');
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", "solo_leveling_backup.json");
+            dl.click();
+        }
+
+        function importData(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                state = JSON.parse(evt.target.result);
+                saveState();
+                showNotif("SYSTEM UPDATE", "Daten wiederhergestellt!");
+            };
+            reader.readAsText(file);
+        }
+
+        loadState();
+    </script>
+</body>
+</html>
