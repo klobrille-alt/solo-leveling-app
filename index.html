@@ -40,6 +40,7 @@
             background-attachment: fixed;
         }
 
+        /* Fixed Navigation Bar at Bottom */
         .nav-tabs {
             display: flex;
             justify-content: space-around;
@@ -50,7 +51,7 @@
             background: rgba(8, 5, 20, 0.98);
             border-top: 2px solid var(--border-cyan);
             box-shadow: 0 -5px 25px rgba(0, 240, 255, 0.3);
-            padding: 10px 0;
+            padding: 8px 0;
             z-index: 9999;
             backdrop-filter: blur(12px);
         }
@@ -59,17 +60,17 @@
             background: none;
             border: none;
             color: #6c7a9c;
-            font-size: 11px;
+            font-size: 10px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             cursor: pointer;
-            width: 33%;
+            width: 25%;
             user-select: none;
             transition: all 0.2s ease;
         }
@@ -87,6 +88,7 @@
             display: block;
         }
 
+        /* Solo Leveling Window Panel */
         .system-panel {
             background: var(--panel-bg);
             border: 1px solid var(--border-cyan);
@@ -95,16 +97,16 @@
                 0 0 40px rgba(123, 44, 191, 0.2),
                 inset 0 0 15px rgba(0, 240, 255, 0.1);
             border-radius: 4px;
-            padding: 18px;
-            margin-bottom: 18px;
+            padding: 16px;
+            margin-bottom: 16px;
             position: relative;
         }
 
         .system-panel::before, .system-panel::after {
             content: '';
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border: 2px solid var(--border-cyan);
             pointer-events: none;
         }
@@ -115,102 +117,102 @@
         .panel-header {
             text-align: center;
             border-bottom: 1px solid rgba(0, 240, 255, 0.3);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
         }
 
         .panel-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 900;
             color: #ffffff;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
             text-shadow: 0 0 10px var(--border-cyan);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .panel-title::before {
             content: 'ⓘ';
             color: var(--accent-red);
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .rank-box {
             text-align: center;
-            padding: 18px 0;
+            padding: 16px 0;
             background: radial-gradient(circle, rgba(123, 44, 191, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
             border-radius: 6px;
             border: 1px solid rgba(157, 78, 221, 0.5);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .rank-badge {
             font-family: 'Orbitron', sans-serif;
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 900;
             color: var(--accent-gold);
             text-shadow: 0 0 20px var(--accent-gold);
-            letter-spacing: 4px;
+            letter-spacing: 3px;
         }
 
         .rank-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             color: #00f0ff;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 6px;
+            letter-spacing: 2.5px;
+            margin-top: 4px;
         }
 
         .stat-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         .stat-card {
             background: rgba(5, 3, 15, 0.7);
             border: 1px solid rgba(0, 240, 255, 0.3);
-            padding: 12px;
+            padding: 10px;
             border-radius: 4px;
             text-align: center;
         }
 
         .stat-name {
             font-family: 'Orbitron', sans-serif;
-            font-size: 10px;
+            font-size: 9px;
             color: #8faecb;
-            letter-spacing: 1.5px;
-            margin-bottom: 4px;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
         }
 
         .stat-val {
             font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 0 0 10px var(--border-cyan);
+            text-shadow: 0 0 8px var(--border-cyan);
         }
 
         .bar-container {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .bar-label {
             display: flex;
             justify-content: space-between;
             font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
-            margin-bottom: 6px;
+            font-size: 10px;
+            margin-bottom: 4px;
             color: #a0c0e0;
         }
 
         .bar-bg {
             background: rgba(0, 0, 0, 0.6);
-            height: 14px;
+            height: 12px;
             border-radius: 3px;
             overflow: hidden;
             border: 1px solid rgba(0, 240, 255, 0.4);
@@ -221,25 +223,25 @@
             transition: width 0.4s ease;
         }
 
-        .hp-fill { background: linear-gradient(90deg, #ff2a6d, #ff0055); box-shadow: 0 0 12px #ff2a6d; }
-        .mp-fill { background: linear-gradient(90deg, #00f0ff, #7b2cbf); box-shadow: 0 0 12px #00f0ff; }
-        .xp-fill { background: linear-gradient(90deg, #ffbe0b, #ff9e00); box-shadow: 0 0 12px #ffbe0b; }
+        .hp-fill { background: linear-gradient(90deg, #ff2a6d, #ff0055); box-shadow: 0 0 10px #ff2a6d; }
+        .mp-fill { background: linear-gradient(90deg, #00f0ff, #7b2cbf); box-shadow: 0 0 10px #00f0ff; }
+        .xp-fill { background: linear-gradient(90deg, #ffbe0b, #ff9e00); box-shadow: 0 0 10px #ffbe0b; }
 
         .input-group {
             display: flex;
-            gap: 10px;
-            margin-top: 12px;
+            gap: 8px;
+            margin-top: 8px;
         }
 
-        input[type="number"] {
-            background: rgba(3, 1, 10, 0.8);
+        input[type="number"], input[type="text"] {
+            background: rgba(3, 1, 10, 0.85);
             border: 1px solid var(--border-cyan);
             color: #fff;
-            padding: 12px;
+            padding: 10px;
             border-radius: 4px;
             width: 100%;
             font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
+            font-size: 12px;
             outline: none;
         }
 
@@ -247,14 +249,15 @@
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(123, 44, 191, 0.3));
             border: 1px solid var(--border-cyan);
             color: #fff;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: 4px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 1.5px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            white-space: nowrap;
         }
 
         .btn:active {
@@ -281,29 +284,81 @@
             filter: grayscale(0.8);
         }
 
-        .boss-card.active-boss {
-            border-color: var(--accent-red);
-            box-shadow: 0 0 15px rgba(255, 42, 109, 0.4);
+        .boss-card.cleared {
+            border-color: var(--accent-gold);
+            background: rgba(255, 190, 11, 0.08);
         }
 
         .boss-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 900;
             color: var(--accent-red);
             display: flex;
             justify-content: space-between;
         }
 
+        /* Calendar Styling */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 10px;
+        }
+
+        .calendar-day-header {
+            font-family: 'Orbitron';
+            font-size: 9px;
+            text-align: center;
+            color: var(--border-cyan);
+            padding-bottom: 4px;
+        }
+
+        .calendar-cell {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            min-height: 42px;
+            padding: 4px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .calendar-cell.has-logs {
+            border-color: var(--accent-gold);
+            box-shadow: inset 0 0 8px rgba(255, 190, 11, 0.3);
+        }
+
+        .calendar-cell.selected {
+            border-color: var(--border-cyan);
+            background: rgba(0, 240, 255, 0.2);
+        }
+
+        /* Inventory Items */
+        .weapon-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-gold);
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-top: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Modal / Notification Overlays */
         #notification {
             position: fixed;
-            top: 25px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(-150px);
             background: rgba(8, 4, 22, 0.96);
             border: 2px solid var(--border-cyan);
             box-shadow: 0 0 35px var(--border-cyan);
-            padding: 16px 30px;
+            padding: 14px 24px;
             border-radius: 6px;
             text-align: center;
             z-index: 10000;
@@ -311,16 +366,36 @@
             pointer-events: none;
         }
 
-        #notification.show {
-            transform: translateX(-50%) translateY(0);
+        #notification.show { transform: translateX(-50%) translateY(0); }
+
+        #chest-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(4, 2, 9, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+            padding: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
     <div id="notification">
-        <div id="notif-title" style="font-family: 'Orbitron'; color: var(--border-cyan); font-weight: 900; font-size: 16px;">QUEST COMPLETE</div>
-        <div id="notif-desc" style="font-size: 13px; margin-top: 4px; color: #fff;">+1.0 INT | +10 MP</div>
+        <div id="notif-title" style="font-family: 'Orbitron'; color: var(--border-cyan); font-weight: 900; font-size: 15px;">QUEST COMPLETE</div>
+        <div id="notif-desc" style="font-size: 12px; margin-top: 4px; color: #fff;">+1.0 INT | +10 MP</div>
+    </div>
+
+    <!-- LOOT CHEST MODAL POPUP -->
+    <div id="chest-modal">
+        <div style="font-family: 'Orbitron'; font-size: 24px; color: var(--accent-gold); font-weight: 900; text-shadow: 0 0 20px var(--accent-gold);">TREASURE CHEST DISCOVERED!</div>
+        <div style="font-size: 72px; margin: 20px 0; animation: bounce 1s infinite alternate;">🎁</div>
+        <div id="chest-weapon-name" style="font-family: 'Orbitron'; font-size: 20px; color: var(--border-cyan); margin-bottom: 10px;">-</div>
+        <div id="chest-weapon-desc" style="font-size: 13px; color: #a0c0e0; margin-bottom: 25px;">-</div>
+        <button class="btn" style="padding: 14px 28px; font-size: 13px;" onclick="closeChestModal()">IN INS ARSENAL AUFNEHMEN</button>
     </div>
 
     <!-- TAB 1: DASHBOARD -->
@@ -328,7 +403,7 @@
         <div class="system-panel">
             <div class="panel-header">
                 <div class="panel-title">HUNTER STATUS HUD</div>
-                <div id="player-lvl" style="font-family: 'Orbitron'; font-weight: 900; color: var(--accent-gold); margin-top: 6px; font-size: 14px;">LEVEL 1</div>
+                <div id="player-lvl" style="font-family: 'Orbitron'; font-weight: 900; color: var(--accent-gold); margin-top: 4px; font-size: 13px;">LEVEL 1</div>
             </div>
 
             <div class="rank-box">
@@ -358,22 +433,30 @@
             </div>
             <div class="stat-grid">
                 <div class="stat-card">
-                    <div class="stat-name">STRENGTH</div>
+                    <div class="stat-name">STRENGTH (STR)</div>
                     <div class="stat-val" id="stat-str">10.0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-name">ENDURANCE</div>
+                    <div class="stat-name">ENDURANCE (END)</div>
                     <div class="stat-val" id="stat-end">10.0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-name">INTELLIGENCE</div>
+                    <div class="stat-name">INTELLIGENCE (INT)</div>
                     <div class="stat-val" id="stat-int">10.0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-name">FOCUS (ANTI-ADHD)</div>
+                    <div class="stat-name">FOCUS (FOC)</div>
                     <div class="stat-val" id="stat-foc">10.0</div>
                 </div>
             </div>
+        </div>
+
+        <!-- WEAPONS INVENTORY -->
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">SOLO ARSENAL (DOLCHE & WAFEN)</div>
+            </div>
+            <div id="inventory-list" style="font-size: 12px; color: #7a8b9e; text-align: center;">Bisher keine Legenden-Waffen gesammelt. Besiege Gate-Bosse!</div>
         </div>
 
         <div class="system-panel" style="display: flex; justify-content: space-between; gap: 10px;">
@@ -383,87 +466,127 @@
         </div>
     </div>
 
-    <!-- TAB 2: QUESTS -->
+    <!-- TAB 2: QUESTS (NEU STRUKTURIERT) -->
     <div id="tab-quests" class="tab-content">
-
-        <!-- SCREEN TIME ANALYSIS -->
+        
+        <!-- 1. PHYSICAL TRAINING -->
         <div class="system-panel">
             <div class="panel-header">
-                <div class="panel-title">SCREEN-TIME LOGGING</div>
+                <div class="panel-title">1. PHYSICAL TRAINING</div>
             </div>
+            
+            <div style="font-size: 11px; color: var(--border-cyan); font-family: Orbitron; margin-bottom: 6px;">💪 KRAFT-TRAINING (+STR)</div>
+            <button class="btn" style="width: 100%; margin-bottom: 12px;" onclick="logSport('Gym / Krafttraining', 'str', 1.0, 15)">🏋️ GYM SESSION (+1.0 STR | +15 MP)</button>
 
-            <div style="margin-bottom: 12px;">
-                <div style="font-size: 12px; color: #a0c0e0; margin-bottom: 4px;">🎓 Lernen & Bildung (YouTube / Doku / PDF):</div>
-                <div class="input-group">
-                    <input type="number" id="study-time-input" placeholder="Minuten gelernt...">
-                    <button class="btn" onclick="logStudyTime()">BUFF (+FOC)</button>
-                </div>
+            <div style="font-size: 11px; color: var(--border-cyan); font-family: Orbitron; margin-bottom: 6px;">🏃 AUSDAUER-TRAINING (+END)</div>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn" style="flex: 1;" onclick="logSport('Schwimmen', 'end', 1.0, 15)">🏊 SCHWIMMEN (+1 END)</button>
+                <button class="btn" style="flex: 1;" onclick="logSport('Radfahren', 'end', 1.0, 15)">🚴 RADFAHREN (+1 END)</button>
             </div>
+        </div>
 
-            <div style="margin-top: 15px;">
-                <div style="font-size: 12px; color: var(--accent-red); margin-bottom: 4px;">📱 Social Media (TikTok / Insta / Shorts):</div>
+        <!-- 2. UNI & AKADEMIE LERNEN -->
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">2. LERNEN & UNI-FACH</div>
+            </div>
+            <div style="font-size: 12px; color: #a0c0e0; margin-bottom: 8px;">Trage das Fach & die gelernten Minuten ein (30 Min = +0.5 INT & +15 MP):</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <input type="text" id="study-subject-input" placeholder="Fachname (z.B. Statistik, Mathe, Info)...">
                 <div class="input-group">
-                    <input type="number" id="social-time-input" placeholder="Minuten gescrollt...">
-                    <button class="btn btn-danger" onclick="logSocialTime()">CHECK</button>
+                    <input type="number" id="study-minutes-input" placeholder="Minuten gelernt...">
+                    <button class="btn" onclick="logSubjectStudy()">TRACK LERNEN</button>
                 </div>
             </div>
         </div>
 
+        <!-- 3. BUCH LESEN -->
         <div class="system-panel">
             <div class="panel-header">
-                <div class="panel-title">DAILY QUEST: READ & LEARN</div>
+                <div class="panel-title">3. BUCH LESEN</div>
             </div>
-            <div style="font-size: 13px; color: #a0c0e0; text-align: center;">1 Seite = +0.1 INT & +1 Mana (MP)</div>
+            <div style="font-size: 12px; color: #a0c0e0; margin-bottom: 6px;">1 Seite = +0.1 INT & +1 MP</div>
             <div class="input-group">
                 <input type="number" id="pages-input" placeholder="Gelesene Seiten...">
-                <button class="btn" onclick="logReading()">TRACK</button>
+                <button class="btn" onclick="logReading()">TRACK LESEN</button>
             </div>
         </div>
 
+        <!-- 4. FOKUS TIMER & SCREEN TIME -->
         <div class="system-panel">
             <div class="panel-header">
-                <div class="panel-title">PHYSICAL TRAINING</div>
+                <div class="panel-title">4. DEEP WORK & SCREEN-TIME</div>
             </div>
-            <div style="display: flex; gap: 10px; margin-top: 8px;">
-                <button class="btn" style="flex: 1;" onclick="addStat('str', 1.0, 15, 'Gym Session (+1.0 STR | +15 MP)')">🏋️ GYM (+1 STR)</button>
-                <button class="btn" style="flex: 1;" onclick="addStat('end', 1.0, 15, 'Schwimmen (+1.0 END | +15 MP)')">🏊 SCHWIMMEN (+1 END)</button>
+            <div style="text-align: center; margin: 10px 0;">
+                <div id="timer-display" style="font-family: 'Orbitron'; font-size: 36px; font-weight: 900; color: var(--border-cyan);">25:00</div>
             </div>
-        </div>
-
-        <div class="system-panel">
-            <div class="panel-header">
-                <div class="panel-title">DEEP WORK FOCUS TIMER</div>
-            </div>
-            <div style="text-align: center; margin: 15px 0;">
-                <div id="timer-display" style="font-family: 'Orbitron'; font-size: 42px; font-weight: 900; letter-spacing: 3px; color: var(--border-cyan); text-shadow: 0 0 15px var(--border-cyan);">25:00</div>
-            </div>
-            <div style="display: flex; gap: 10px;">
+            <div style="display: flex; gap: 8px; margin-bottom: 14px;">
                 <button class="btn" style="flex: 1;" onclick="toggleTimer()" id="timer-btn">START FOKUS</button>
                 <button class="btn btn-danger" onclick="resetTimer()">RESET</button>
             </div>
+
+            <div style="border-top: 1px dashed rgba(0,240,255,0.2); padding-top: 10px;">
+                <div style="font-size: 11px; color: var(--accent-red); font-family: Orbitron; margin-bottom: 4px;">📱 SOCIAL MEDIA SCREEN-TIME</div>
+                <div class="input-group">
+                    <input type="number" id="social-time-input" placeholder="Minuten gescrollt...">
+                    <button class="btn btn-danger" onclick="logSocialTime()">PENALTY CHECK</button>
+                </div>
+            </div>
         </div>
+
     </div>
 
-    <!-- TAB 3: BOSS DUNGEONS & GATES -->
+    <!-- TAB 3: BOSS DUNGEONS (ONE-TIME CLEAR) -->
     <div id="tab-boss" class="tab-content">
         <div class="system-panel">
             <div class="panel-header">
-                <div class="panel-title">SYSTEM GATES & DUNGEONS</div>
+                <div class="panel-title">SYSTEM GATES & BOSSES</div>
             </div>
             <div id="dungeon-list"></div>
+        </div>
+    </div>
+
+    <!-- TAB 4: KALENDER & LOGBUCH -->
+    <div id="tab-calendar" class="tab-content">
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">HUNTER LOGBUCH & KALENDER</div>
+            </div>
+            <div id="calendar-month-title" style="font-family: Orbitron; font-size: 13px; color: var(--accent-gold); text-align: center; margin-bottom: 8px;">-</div>
+            
+            <div class="calendar-grid">
+                <div class="calendar-day-header">MO</div>
+                <div class="calendar-day-header">DI</div>
+                <div class="calendar-day-header">MI</div>
+                <div class="calendar-day-header">DO</div>
+                <div class="calendar-day-header">FR</div>
+                <div class="calendar-day-header">SA</div>
+                <div class="calendar-day-header">SO</div>
+            </div>
+            <div class="calendar-grid" id="calendar-days-container"></div>
+        </div>
+
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title" id="selected-date-title">TAGES-PROTOKOLL</div>
+            </div>
+            <div id="day-log-list" style="font-size: 12px; color: #a0c0e0;">Wähle oben einen Tag im Kalender aus.</div>
         </div>
     </div>
 
     <!-- LOWER NAVIGATION TABS -->
     <div class="nav-tabs">
         <button class="tab-btn active" id="btn-dashboard" onclick="switchTab('dashboard')">
-            <span style="font-size: 20px;">🛡️</span> STATUS
+            <span style="font-size: 18px;">🛡️</span> STATUS
         </button>
         <button class="tab-btn" id="btn-quests" onclick="switchTab('quests')">
-            <span style="font-size: 20px;">⚡</span> QUESTS
+            <span style="font-size: 18px;">⚡</span> QUESTS
         </button>
         <button class="tab-btn" id="btn-boss" onclick="switchTab('boss')">
-            <span style="font-size: 20px;">⚔️</span> DUNGEONS
+            <span style="font-size: 18px;">⚔️</span> DUNGEONS
+        </button>
+        <button class="tab-btn" id="btn-calendar" onclick="switchTab('calendar')">
+            <span style="font-size: 18px;">📅</span> KALENDER
         </button>
     </div>
 
@@ -477,7 +600,9 @@
             hp: 100,
             hpMax: 100,
             stats: { str: 10.0, end: 10.0, int: 10.0, foc: 10.0 },
-            defeatedBosses: []
+            clearedBosses: [],
+            inventory: [],
+            logs: {} // "YYYY-MM-DD": ["Gym Session", "Statistik gelernt"]
         };
 
         const ranks = [
@@ -491,17 +616,27 @@
         ];
 
         const dungeons = [
-            { id: 'e_goblin', gate: 'E-RANK GATE', boss: 'Goblin Leader', reqRank: 'E-RANK', reqMp: 0, hp: 300, maxHp: 300, xpReward: 150 },
-            { id: 'd_kasaka', gate: 'D-RANK GATE', boss: 'Blue Poison-Fang Kasaka', reqRank: 'D-RANK', reqMp: 100, hp: 800, maxHp: 800, xpReward: 400 },
-            { id: 'c_cerberus', gate: 'C-RANK GATE', boss: 'Cerberus (Keeper of Hell)', reqRank: 'C-RANK', reqMp: 300, hp: 2000, maxHp: 2000, xpReward: 1000 },
-            { id: 'b_igris', gate: 'B-RANK GATE', boss: 'Blood-Red Commander Igris', reqRank: 'B-RANK', reqMp: 600, hp: 5000, maxHp: 5000, xpReward: 2500 },
-            { id: 'a_kargalgan', gate: 'A-RANK GATE', boss: 'Kargalgan (High Shaman)', reqRank: 'A-RANK', reqMp: 1000, hp: 12000, maxHp: 12000, xpReward: 6000 },
-            { id: 's_beru', gate: 'S-RANK GATE', boss: 'Beru (Ant King)', reqRank: 'S-RANK', reqMp: 2000, hp: 30000, maxHp: 30000, xpReward: 15000 }
+            { id: 'e_goblin', gate: 'E-RANK GATE', boss: 'Goblin Leader', reqRank: 'E-RANK', reqMp: 0, hp: 300, maxHp: 300, weapon: 'Kim Sangshik\'s Dagger', weaponDesc: 'Ein scharfer E-Rank Kurzdolch.' },
+            { id: 'd_kasaka', gate: 'D-RANK GATE', boss: 'Kasaka (Giant Serpent)', reqRank: 'D-RANK', reqMp: 100, hp: 800, maxHp: 800, weapon: 'Rasaka\'s Venom Fang', weaponDesc: 'Paralysiert Gegner bei Treffern.' },
+            { id: 'c_cerberus', gate: 'C-RANK GATE', boss: 'Cerberus (Keeper of Hell)', reqRank: 'C-RANK', reqMp: 300, hp: 2000, maxHp: 2000, weapon: 'Demon King\'s Dagger', weaponDesc: 'Hüllt die Klinge in Hölleflammen.' },
+            { id: 'b_igris', gate: 'B-RANK GATE', boss: 'Blood-Red Commander Igris', reqRank: 'B-RANK', reqMp: 600, hp: 5000, maxHp: 5000, weapon: 'Knight Killer Dagger', weaponDesc: 'Durchdringt schwere Panzerungen.' },
+            { id: 'a_kargalgan', gate: 'A-RANK GATE', boss: 'Kargalgan (Orc High Shaman)', reqRank: 'A-RANK', reqMp: 1000, hp: 12000, maxHp: 12000, weapon: 'Orb of Avarice', weaponDesc: 'Verdoppelt magischen Schaden.' },
+            { id: 's_beru', gate: 'S-RANK GATE', boss: 'Beru (Ant King)', reqRank: 'S-RANK', reqMp: 2000, hp: 30000, maxHp: 30000, weapon: 'Kamish\'s Wrath', weaponDesc: 'Die mächtigste Drachen-Klinge der Welt.' }
         ];
+
+        let selectedCalendarDate = getTodayKey();
+
+        function getTodayKey() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        }
 
         function loadState() {
             try {
-                const saved = localStorage.getItem('solo_leveling_v7');
+                const saved = localStorage.getItem('solo_leveling_v8');
                 if(saved) state = JSON.parse(saved);
             } catch(e) { console.log(e); }
             updateUI();
@@ -509,17 +644,16 @@
 
         function saveState() {
             try {
-                localStorage.setItem('solo_leveling_v7', JSON.stringify(state));
+                localStorage.setItem('solo_leveling_v8', JSON.stringify(state));
             } catch(e) { console.log(e); }
             updateUI();
         }
 
-        function getCurrentRankObj() {
-            let current = ranks[0];
-            for(let i = 0; i < ranks.length; i++) {
-                if(state.mp >= ranks[i].mp) current = ranks[i];
-            }
-            return current;
+        function addLogEntry(text) {
+            const today = getTodayKey();
+            if(!state.logs[today]) state.logs[today] = [];
+            const timeStr = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            state.logs[today].push(`[${timeStr}] ${text}`);
         }
 
         function updateUI() {
@@ -535,10 +669,11 @@
             document.getElementById('xp-text').innerText = `${Math.round(state.xp)} / ${state.xpMax} XP`;
             document.getElementById('xp-bar').style.width = `${(state.xp / state.xpMax) * 100}%`;
 
-            let currentRank = getCurrentRankObj();
+            let currentRank = ranks[0];
             let nextRankMp = ranks[1].mp;
             for(let i = 0; i < ranks.length; i++) {
                 if(state.mp >= ranks[i].mp) {
+                    currentRank = ranks[i];
                     nextRankMp = ranks[i+1] ? ranks[i+1].mp : ranks[i].mp * 2;
                 }
             }
@@ -549,7 +684,29 @@
             document.getElementById('mp-text').innerText = `${Math.round(state.mp)} / ${state.mpMax} MP`;
             document.getElementById('mp-bar').style.width = `${Math.min(100, (state.mp / state.mpMax) * 100)}%`;
 
+            renderInventory();
             renderDungeons();
+            renderCalendar();
+        }
+
+        function renderInventory() {
+            const list = document.getElementById('inventory-list');
+            if(!state.inventory || state.inventory.length === 0) {
+                list.innerHTML = `<div style="font-size: 12px; color: #7a8b9e; text-align: center;">Keine Waffen im Arsenal. Besiege Gate-Bosse!</div>`;
+                return;
+            }
+            list.innerHTML = '';
+            state.inventory.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'weapon-item';
+                div.innerHTML = `
+                    <div>
+                        <div style="font-family: Orbitron; font-size: 12px; color: var(--accent-gold); font-weight: 700;">🗡️ ${item.name}</div>
+                        <div style="font-size: 11px; color: #a0c0e0;">${item.desc}</div>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
         }
 
         function renderDungeons() {
@@ -557,31 +714,36 @@
             list.innerHTML = '';
 
             dungeons.forEach(d => {
-                const isLocked = state.mp < d.reqMp;
+                const isCleared = state.clearedBosses.includes(d.id);
+                const isLocked = state.mp < d.reqMp && !isCleared;
+                
                 const card = document.createElement('div');
-                card.className = `boss-card ${isLocked ? 'locked' : 'active-boss'}`;
+                card.className = `boss-card ${isCleared ? 'cleared' : (isLocked ? 'locked' : '')}`;
 
                 card.innerHTML = `
-                    <div style="font-family: Orbitron; font-size: 11px; color: var(--border-cyan);">${d.gate}</div>
-                    <div class="boss-title">${d.boss} ${isLocked ? '🔒' : '⚔️'}</div>
-                    <div style="font-size: 12px; color: #a0c0e0; margin: 6px 0;">Erforderlich: ${d.reqRank} (${d.reqMp} MP)</div>
-                    <div class="bar-container" style="margin-top: 8px;">
-                        <div class="bar-label"><span>BOSS HP</span><span>${d.hp} / ${d.maxHp}</span></div>
-                        <div class="bar-bg"><div class="bar-fill hp-fill" style="width: ${(d.hp / d.maxHp) * 100}%;"></div></div>
+                    <div style="font-family: Orbitron; font-size: 10px; color: var(--border-cyan);">${d.gate}</div>
+                    <div class="boss-title">
+                        <span>${d.boss}</span>
+                        <span>${isCleared ? '🏆 CLEARED' : (isLocked ? '🔒' : '⚔️')}</span>
                     </div>
-                    <button class="btn ${isLocked ? '' : 'btn-danger'}" style="width: 100%; margin-top: 8px;" 
-                        ${isLocked ? 'disabled' : ''} onclick="attackDungeonBoss('${d.id}')">
-                        ${isLocked ? 'GENTRITT GESPERRT' : 'ATTACK BOSS'}
+                    <div style="font-size: 11px; color: #a0c0e0; margin: 4px 0;">Voraussetzung: ${d.reqRank} (${d.reqMp} MP)</div>
+                    <div style="font-size: 11px; color: var(--accent-gold);">Belohnung: ${d.weapon}</div>
+                    
+                    <button class="btn ${isCleared || isLocked ? '' : 'btn-danger'}" style="width: 100%; margin-top: 8px;" 
+                        ${isCleared || isLocked ? 'disabled' : ''} onclick="attackDungeonBoss('${d.id}')">
+                        ${isCleared ? 'GATE CLEARED' : (isLocked ? 'GESPERRT' : 'ATTACK BOSS')}
                     </button>
                 `;
                 list.appendChild(card);
             });
         }
 
-        function addStat(type, val, mpGain, msg) {
+        function addStat(type, val, mpGain, msg, logText) {
             state.stats[type] += val;
             state.mp += mpGain;
             state.xp += mpGain * 1.5;
+
+            if(logText) addLogEntry(logText);
 
             if(state.xp >= state.xpMax) {
                 state.level++;
@@ -594,37 +756,23 @@
             saveState();
         }
 
-        function applyPenalty(type, val, hpLoss, msg) {
-            state.stats[type] = Math.max(0, state.stats[type] - val);
-            state.hp = Math.max(0, state.hp - hpLoss);
-            showNotif("PENALTY APPLIED", msg);
-            saveState();
+        function logSport(name, type, val, mpGain) {
+            const label = type === 'str' ? 'STR' : 'END';
+            addStat(type, val, mpGain, `${name} (+${val.toFixed(1)} ${label} | +${mpGain} MP)`, `Sport: ${name} (+${val.toFixed(1)} ${label})`);
         }
 
-        function logStudyTime() {
-            const input = document.getElementById('study-time-input');
-            const mins = parseFloat(input.value);
+        function logSubjectStudy() {
+            const subjectInput = document.getElementById('study-subject-input');
+            const minsInput = document.getElementById('study-minutes-input');
+            const subject = subjectInput.value.trim() || "Uni-Lernen";
+            const mins = parseFloat(minsInput.value);
+
             if(mins && mins > 0) {
-                const focGain = (mins / 30) * 0.5;
+                const intGain = (mins / 30) * 0.5;
                 const mpGain = Math.round((mins / 30) * 15);
-                addStat('foc', focGain, mpGain, `${mins} Min Bildung (+${focGain.toFixed(1)} FOC | +${mpGain} MP)`);
-                input.value = '';
-            }
-        }
-
-        function logSocialTime() {
-            const input = document.getElementById('social-time-input');
-            const mins = parseFloat(input.value);
-            if(mins && mins > 0) {
-                if(mins <= 30) {
-                    showNotif("DISZIPLIN GEHALTEN", `${mins} Min Social Media ist akzeptabel!`);
-                } else {
-                    const penaltyMins = mins - 30;
-                    const focLoss = (penaltyMins / 30) * 0.5;
-                    const hpLoss = Math.round((penaltyMins / 30) * 10);
-                    applyPenalty('foc', focLoss, hpLoss, `${mins} Min Social Media (-${focLoss.toFixed(1)} FOC | -${hpLoss} HP)`);
-                }
-                input.value = '';
+                addStat('int', intGain, mpGain, `${subject}: ${mins} Min (+${intGain.toFixed(1)} INT | +${mpGain} MP)`, `Gelernt: ${subject} (${mins} Min)`);
+                subjectInput.value = '';
+                minsInput.value = '';
             }
         }
 
@@ -634,36 +782,119 @@
             if(pages && pages > 0) {
                 const intGain = pages * 0.1;
                 const mpGain = Math.round(pages * 1);
-                addStat('int', intGain, mpGain, `${pages} Seiten (+${intGain.toFixed(1)} INT | +${mpGain} MP)`);
+                addStat('int', intGain, mpGain, `${pages} Seiten gelesen (+${intGain.toFixed(1)} INT | +${mpGain} MP)`, `Gelesen: ${pages} Seiten`);
                 input.value = '';
+            }
+        }
+
+        function logSocialTime() {
+            const input = document.getElementById('social-time-input');
+            const mins = parseFloat(input.value);
+            if(mins && mins > 0) {
+                if(mins <= 30) {
+                    showNotif("DISZIPLIN GEHALTEN", `${mins} Min Social Media ist erlaubt!`);
+                } else {
+                    const penaltyMins = mins - 30;
+                    const focLoss = (penaltyMins / 30) * 0.5;
+                    const hpLoss = Math.round((penaltyMins / 30) * 10);
+                    state.stats.foc = Math.max(0, state.stats.foc - focLoss);
+                    state.hp = Math.max(0, state.hp - hpLoss);
+                    addLogEntry(`Penalty: ${mins} Min Social Media (-${focLoss.toFixed(1)} FOC)`);
+                    showNotif("PENALTY APPLIED", `${mins} Min Social Media (-${focLoss.toFixed(1)} FOC | -${hpLoss} HP)`);
+                }
+                input.value = '';
+                saveState();
             }
         }
 
         function attackDungeonBoss(bossId) {
             const boss = dungeons.find(d => d.id === bossId);
-            if(!boss) return;
+            if(!boss || state.clearedBosses.includes(bossId)) return;
 
-            const damage = (state.stats.str * 2.5) + (state.stats.int * 2) + (state.stats.end * 1.5);
-            boss.hp -= damage;
+            // One-time defeat
+            state.clearedBosses.push(bossId);
+            state.inventory.push({ name: boss.weapon, desc: boss.weaponDesc });
+            addLogEntry(`Boss Besiegt: ${boss.boss} (Loot: ${boss.weapon})`);
 
-            if(boss.hp <= 0) {
-                boss.hp = 0;
-                showNotif("GATE CLEARED!", `${boss.boss} besiegt! +${boss.xpReward} System XP!`);
-                state.xp += boss.xpReward;
-
-                if(state.xp >= state.xpMax) {
-                    state.level++;
-                    state.xp -= state.xpMax;
-                    state.xpMax = Math.round(state.xpMax * 1.25);
-                }
-
-                setTimeout(() => { boss.hp = boss.maxHp; saveState(); }, 3000);
-            } else {
-                showNotif("CRITICAL HIT!", `Du fügst ${boss.boss} ${Math.round(damage)} Schaden zu!`);
-            }
             saveState();
+
+            // Open Loot Chest Modal
+            document.getElementById('chest-weapon-name').innerText = `🗡️ ${boss.weapon}`;
+            document.getElementById('chest-weapon-desc').innerText = boss.weaponDesc;
+            document.getElementById('chest-modal').style.display = 'flex';
         }
 
+        function closeChestModal() {
+            document.getElementById('chest-modal').style.display = 'none';
+        }
+
+        /* Calendar Logic */
+        function renderCalendar() {
+            const container = document.getElementById('calendar-days-container');
+            container.innerHTML = '';
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+
+            const monthNames = ["JANUAR", "FEBRUAR", "MÄRZ", "APRIL", "MAI", "JUNI", "JULI", "AUGUST", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DEZEMBER"];
+            document.getElementById('calendar-month-title').innerText = `${monthNames[month]} ${year}`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const startOffset = (firstDay === 0 ? 6 : firstDay - 1);
+
+            for(let i = 0; i < startOffset; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-cell';
+                emptyCell.style.opacity = '0.2';
+                container.appendChild(emptyCell);
+            }
+
+            for(let day = 1; day <= daysInMonth; day++) {
+                const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasLogs = state.logs[dateKey] && state.logs[dateKey].length > 0;
+                
+                const cell = document.createElement('div');
+                cell.className = `calendar-cell ${hasLogs ? 'has-logs' : ''} ${dateKey === selectedCalendarDate ? 'selected' : ''}`;
+                cell.onclick = () => selectCalendarDate(dateKey);
+
+                cell.innerHTML = `
+                    <div style="font-weight: bold; font-family: Orbitron;">${day}</div>
+                    <div style="font-size: 8px; color: var(--accent-gold);">${hasLogs ? '📜 ' + state.logs[dateKey].length : ''}</div>
+                `;
+                container.appendChild(cell);
+            }
+
+            renderDayLogs(selectedCalendarDate);
+        }
+
+        function selectCalendarDate(dateKey) {
+            selectedCalendarDate = dateKey;
+            renderCalendar();
+        }
+
+        function renderDayLogs(dateKey) {
+            document.getElementById('selected-date-title').innerText = `PROTOKOLL: ${dateKey}`;
+            const list = document.getElementById('day-log-list');
+            const entries = state.logs[dateKey];
+
+            if(!entries || entries.length === 0) {
+                list.innerHTML = `<div style="color: #7a8b9e;">Keine Aktivitäten an diesem Tag aufgezeichnet.</div>`;
+                return;
+            }
+
+            list.innerHTML = '';
+            entries.forEach(entry => {
+                const div = document.createElement('div');
+                div.style.padding = "6px 0";
+                div.style.borderBottom = "1px rgba(0, 240, 255, 0.1) solid";
+                div.innerText = entry;
+                list.appendChild(div);
+            });
+        }
+
+        // Timer
         let timerInterval = null;
         let timeLeft = 25 * 60;
 
@@ -685,7 +916,7 @@
                         timerInterval = null;
                         timeLeft = 25 * 60;
                         btn.innerText = "START FOKUS";
-                        addStat('foc', 1.0, 20, "25 Min Fokus (+1.0 FOC | +20 MP)");
+                        addStat('foc', 1.0, 20, "25 Min Fokus (+1.0 FOC | +20 MP)", "Deep Work Session (25 Min)");
                     }
                 }, 1000);
             }
@@ -708,11 +939,8 @@
         }
 
         function switchTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-btn');
-
-            contents.forEach(el => el.classList.remove('active'));
-            buttons.forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
 
             const targetContent = document.getElementById(`tab-${tabId}`);
             const targetBtn = document.getElementById(`btn-${tabId}`);
