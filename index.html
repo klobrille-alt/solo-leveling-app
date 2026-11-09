@@ -6,8 +6,8 @@
     <title>Solo Leveling System</title>
     <style>
         :root {
-            --bg-color: #050b14;
-            --panel-bg: rgba(10, 25, 47, 0.85);
+            --bg-color: #030712;
+            --panel-bg: rgba(13, 27, 42, 0.9);
             --border-color: #00f0ff;
             --text-color: #e0f7fc;
             --accent-blue: #00a8ff;
@@ -29,14 +29,14 @@
             color: var(--text-color);
             min-height: 100vh;
             padding: 15px;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
             background-image: 
-                radial-gradient(circle at 50% 10%, rgba(0, 168, 255, 0.15), transparent 40%),
-                linear-gradient(to bottom, #030710, #050b14);
+                radial-gradient(circle at 50% 10%, rgba(0, 240, 255, 0.15), transparent 50%),
+                linear-gradient(to bottom, #030712, #070f21);
             background-attachment: fixed;
         }
 
-        /* Nav Tabs */
+        /* Fixed Navigation Bar at Bottom */
         .nav-tabs {
             display: flex;
             justify-content: space-around;
@@ -44,31 +44,32 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(5, 11, 20, 0.95);
-            border-top: 1px solid var(--border-color);
+            background: rgba(7, 15, 33, 0.98);
+            border-top: 2px solid var(--border-color);
+            box-shadow: 0 -5px 20px rgba(0, 240, 255, 0.2);
             padding: 12px 0;
-            backdrop-filter: blur(10px);
             z-index: 100;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            color: #5a7b9c;
+            color: #4a6b8c;
             font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             cursor: pointer;
+            width: 33%;
         }
 
         .tab-btn.active {
             color: var(--accent-glow);
-            text-shadow: 0 0 8px var(--accent-glow);
+            text-shadow: 0 0 10px var(--accent-glow);
         }
 
         .tab-content {
@@ -79,122 +80,126 @@
             display: block;
         }
 
-        /* Panel Styling */
+        /* System Panels */
         .system-panel {
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            position: relative;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 16px;
         }
 
         .panel-title {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--accent-glow);
             text-transform: uppercase;
             letter-spacing: 2px;
             border-bottom: 1px solid rgba(0, 240, 255, 0.3);
-            padding-bottom: 6px;
-            margin-bottom: 12px;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
-        /* Dashboard Styles */
-        .rank-header {
+        /* Dashboard Specifics */
+        .rank-box {
             text-align: center;
-            padding: 10px 0;
+            padding: 15px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            margin-bottom: 15px;
         }
 
         .rank-badge {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 900;
             color: var(--accent-gold);
-            text-shadow: 0 0 15px var(--accent-gold);
-            letter-spacing: 2px;
+            text-shadow: 0 0 18px var(--accent-gold);
+            letter-spacing: 3px;
         }
 
         .rank-title {
-            font-size: 12px;
+            font-size: 13px;
             color: #8ab4f8;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             margin-top: 4px;
         }
 
         .stat-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 12px;
         }
 
         .stat-card {
             background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            padding: 10px;
-            border-radius: 6px;
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            padding: 14px;
+            border-radius: 8px;
             text-align: center;
         }
 
         .stat-name {
             font-size: 11px;
-            color: #7b9bb9;
+            color: #8faecb;
             letter-spacing: 1px;
+            margin-bottom: 6px;
         }
 
         .stat-val {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
-            color: #fff;
-            margin-top: 4px;
-            text-shadow: 0 0 5px var(--border-color);
+            color: #ffffff;
+            text-shadow: 0 0 8px var(--accent-glow);
         }
 
         /* Progress Bars */
         .bar-container {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .bar-label {
             display: flex;
             justify-content: space-between;
             font-size: 11px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
+            color: #a0c0e0;
         }
 
         .bar-bg {
-            background: rgba(255, 255, 255, 0.1);
-            height: 10px;
-            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            height: 12px;
+            border-radius: 6px;
             overflow: hidden;
             border: 1px solid rgba(0, 240, 255, 0.3);
         }
 
         .bar-fill {
             height: 100%;
-            transition: width 0.3s ease;
+            transition: width 0.4s ease;
         }
 
-        .hp-fill { background: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
-        .mp-fill { background: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue); }
-        .xp-fill { background: var(--accent-gold); box-shadow: 0 0 8px var(--accent-gold); }
+        .hp-fill { background: var(--accent-red); box-shadow: 0 0 10px var(--accent-red); }
+        .mp-fill { background: var(--accent-blue); box-shadow: 0 0 10px var(--accent-blue); }
+        .xp-fill { background: var(--accent-gold); box-shadow: 0 0 10px var(--accent-gold); }
 
-        /* Quest Inputs */
+        /* Inputs & Buttons */
         .input-group {
             display: flex;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        input[type="number"], input[type="text"] {
-            background: rgba(0, 0, 0, 0.5);
+        input[type="number"] {
+            background: rgba(0, 0, 0, 0.6);
             border: 1px solid var(--border-color);
             color: #fff;
-            padding: 8px;
-            border-radius: 4px;
+            padding: 10px;
+            border-radius: 6px;
             width: 100%;
             font-size: 14px;
         }
@@ -203,8 +208,8 @@
             background: rgba(0, 168, 255, 0.2);
             border: 1px solid var(--border-color);
             color: #fff;
-            padding: 8px 14px;
-            border-radius: 4px;
+            padding: 10px 16px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
@@ -222,17 +227,17 @@
             background: rgba(255, 51, 102, 0.2);
         }
 
-        /* Notification Popup */
+        /* Notifications */
         #notification {
             position: fixed;
             top: 20px;
             left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: rgba(5, 11, 20, 0.95);
+            transform: translateX(-50%) translateY(-120px);
+            background: rgba(7, 15, 33, 0.98);
             border: 1px solid var(--accent-glow);
-            box-shadow: 0 0 20px var(--accent-glow);
-            padding: 12px 20px;
-            border-radius: 6px;
+            box-shadow: 0 0 25px var(--accent-glow);
+            padding: 14px 24px;
+            border-radius: 8px;
             text-align: center;
             z-index: 1000;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -251,47 +256,48 @@
         <div id="notif-desc" style="font-size: 12px; margin-top: 4px;">+1.0 INT | +10 MP</div>
     </div>
 
-    <!-- TAB 1: DASHBOARD -->
+    <!-- TAB 1: DASHBOARD (REINES PROFIL & STATS) -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="system-panel">
             <div class="panel-title">
-                <span>STATUS HUD</span>
-                <span id="player-lvl">LVL 1</span>
+                <span>HUNTER STATUS</span>
+                <span id="player-lvl" style="color: var(--accent-gold);">LVL 1</span>
             </div>
-            <div class="rank-header">
+
+            <div class="rank-box">
                 <div class="rank-badge" id="player-rank">E-RANK</div>
                 <div class="rank-title" id="player-title">NOVICE HUNTER</div>
             </div>
 
-            <div style="margin-top: 15px;">
-                <div class="bar-container">
-                    <div class="bar-label"><span>HP (HEALTH)</span><span id="hp-text">100 / 100</span></div>
-                    <div class="bar-bg"><div id="hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div></div>
-                </div>
-                <div class="bar-container">
-                    <div class="bar-label"><span>MP (MANA / RANG)</span><span id="mp-text">0 / 100</span></div>
-                    <div class="bar-bg"><div id="mp-bar" class="bar-fill mp-fill" style="width: 0%;"></div></div>
-                </div>
-                <div class="bar-container">
-                    <div class="bar-label"><span>EXP</span><span id="xp-text">0 / 100</span></div>
-                    <div class="bar-bg"><div id="xp-bar" class="bar-fill xp-fill" style="width: 0%;"></div></div>
-                </div>
+            <div class="bar-container">
+                <div class="bar-label"><span>MANA (RANG-FORTSCHRITT)</span><span id="mp-text">0 / 100 MP</span></div>
+                <div class="bar-bg"><div id="mp-bar" class="bar-fill mp-fill" style="width: 0%;"></div></div>
+            </div>
+
+            <div class="bar-container">
+                <div class="bar-label"><span>SYSTEM XP</span><span id="xp-text">0 / 100 XP</span></div>
+                <div class="bar-bg"><div id="xp-bar" class="bar-fill xp-fill" style="width: 0%;"></div></div>
+            </div>
+
+            <div class="bar-container">
+                <div class="bar-label"><span>HEALTH (HP)</span><span id="hp-text">100 / 100 HP</span></div>
+                <div class="bar-bg"><div id="hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div></div>
             </div>
         </div>
 
         <div class="system-panel">
-            <div class="panel-title">STATS</div>
+            <div class="panel-title">CURRENT STATS</div>
             <div class="stat-grid">
                 <div class="stat-card">
-                    <div class="stat-name">STRENGTH</div>
+                    <div class="stat-name">STRENGTH (STR)</div>
                     <div class="stat-val" id="stat-str">10.0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-name">ENDURANCE</div>
+                    <div class="stat-name">ENDURANCE (END)</div>
                     <div class="stat-val" id="stat-end">10.0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-name">INTELLIGENCE</div>
+                    <div class="stat-name">INTELLIGENCE (INT)</div>
                     <div class="stat-val" id="stat-int">10.0</div>
                 </div>
                 <div class="stat-card">
@@ -301,46 +307,46 @@
             </div>
         </div>
 
-        <div class="system-panel" style="display: flex; justify-content: space-between; align-items: center;">
-            <button class="btn" onclick="exportData()">💾 SAVE BACKUP</button>
-            <button class="btn" onclick="document.getElementById('file-input').click()">📂 LOAD BACKUP</button>
+        <div class="system-panel" style="display: flex; justify-content: space-between; gap: 10px;">
+            <button class="btn" style="flex: 1;" onclick="exportData()">💾 SPEICHERN</button>
+            <button class="btn" style="flex: 1;" onclick="document.getElementById('file-input').click()">📂 LADEN</button>
             <input type="file" id="file-input" style="display: none;" onchange="importData(event)">
         </div>
     </div>
 
-    <!-- TAB 2: QUESTS -->
+    <!-- TAB 2: QUESTS (AUFGABEN TRACKEN) -->
     <div id="tab-quests" class="tab-content">
         <div class="system-panel">
             <div class="panel-title">DAILY QUEST: LESEN (INT)</div>
-            <div style="font-size: 12px; color: #a0c0e0;">1 Seite = +0.1 INT & +1 MP</div>
+            <div style="font-size: 12px; color: #a0c0e0;">1 Seite = +0.1 INT & +1 Mana (MP)</div>
             <div class="input-group">
-                <input type="number" id="pages-input" placeholder="Seiten gelesen...">
+                <input type="number" id="pages-input" placeholder="Anzahl Seiten eingeben...">
                 <button class="btn" onclick="logReading()">TRACK</button>
             </div>
         </div>
 
         <div class="system-panel">
             <div class="panel-title">DAILY QUEST: WORKOUTS</div>
-            <div style="display: flex; gap: 8px; margin-top: 8px;">
-                <button class="btn" style="flex: 1;" onclick="addStat('str', 1.0, 15, 'Gym Session (+1.0 STR)')">🏋️ GYM (+1 STR)</button>
-                <button class="btn" style="flex: 1;" onclick="addStat('end', 1.0, 15, 'Schwimmen (+1.0 END)')">🏊 SCHWIMMEN (+1 END)</button>
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                <button class="btn" style="flex: 1;" onclick="addStat('str', 1.0, 15, 'Gym Session (+1.0 STR | +15 MP)')">🏋️ GYM (+1 STR)</button>
+                <button class="btn" style="flex: 1;" onclick="addStat('end', 1.0, 15, 'Schwimmen (+1.0 END | +15 MP)')">🏊 SCHWIMMEN (+1 END)</button>
             </div>
         </div>
 
         <div class="system-panel">
-            <div class="panel-title">DEEP WORK TIMER (FOC & INT)</div>
-            <div style="text-align: center; margin: 10px 0;">
-                <div id="timer-display" style="font-size: 32px; font-weight: bold; letter-spacing: 2px;">25:00</div>
+            <div class="panel-title">DEEP WORK TIMER (FOKUS)</div>
+            <div style="text-align: center; margin: 12px 0;">
+                <div id="timer-display" style="font-size: 36px; font-weight: bold; letter-spacing: 2px; color: var(--accent-glow);">25:00</div>
             </div>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 10px;">
                 <button class="btn" style="flex: 1;" onclick="toggleTimer()" id="timer-btn">START FOKUS</button>
                 <button class="btn btn-danger" onclick="resetTimer()">RESET</button>
             </div>
         </div>
 
         <div class="system-panel" style="border-color: var(--accent-red);">
-            <div class="panel-title" style="color: var(--accent-red);">PENALTY QUEST (DEBUFFS)</div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <div class="panel-title" style="color: var(--accent-red);">PENALTY ZONE (DEBUFFS)</div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button class="btn btn-danger" style="flex: 1;" onclick="applyPenalty('foc', 0.5, 10, 'Ablenkung (-0.5 FOC)')">📱 Social Media (-FOC)</button>
                 <button class="btn btn-danger" style="flex: 1;" onclick="applyPenalty('str', 1.0, 20, 'Gym geschwänzt (-1 STR)')">🛋️ Faulheit (-STR)</button>
             </div>
@@ -351,219 +357,9 @@
     <div id="tab-boss" class="tab-content">
         <div class="system-panel" style="text-align: center;">
             <div class="panel-title" style="justify-content: center;">GATE RANK: E-DUNGEON</div>
-            <div style="font-size: 22px; font-weight: bold; color: var(--accent-red); margin: 10px 0;">GOBLIN LEADER</div>
+            <div style="font-size: 24px; font-weight: bold; color: var(--accent-red); margin: 12px 0;">GOBLIN LEADER</div>
             <div class="bar-container">
                 <div class="bar-label"><span>BOSS HP</span><span id="boss-hp-text">500 / 500</span></div>
                 <div class="bar-bg"><div id="boss-hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div></div>
             </div>
-            <button class="btn btn-danger" style="width: 100%; margin-top: 15px; padding: 12px;" onclick="attackBoss()">⚔️ ATTACK BOSS</button>
-        </div>
-    </div>
-
-    <!-- NAVIGATION TABS -->
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('dashboard')">
-            <span>🛡️</span> STATUS
-        </button>
-        <button class="tab-btn" onclick="switchTab('quests')">
-            <span>⚡</span> QUESTS
-        </button>
-        <button class="tab-btn" onclick="switchTab('boss')">
-            <span>⚔️</span> DUNGEON
-        </button>
-    </div>
-
-    <script>
-        // Game State
-        let state = {
-            level: 1,
-            xp: 0,
-            xpMax: 100,
-            mp: 0,
-            mpMax: 100,
-            hp: 100,
-            hpMax: 100,
-            stats: { str: 10.0, end: 10.0, int: 10.0, foc: 10.0 },
-            bossHp: 500,
-            bossHpMax: 500
-        };
-
-        const ranks = [
-            { mp: 0, name: "E-RANK", title: "Novice Hunter" },
-            { mp: 100, name: "D-RANK", title: "Rookie Hunter" },
-            { mp: 300, name: "C-RANK", title: "Veteran Hunter" },
-            { mp: 600, name: "B-RANK", title: "Elite Hunter" },
-            { mp: 1000, name: "A-RANK", title: "High-Rank Hunter" },
-            { mp: 2000, name: "S-RANK", title: "Shadow Lord" },
-            { mp: 5000, name: "SHADOW MONARCH", title: "Monarch of Shadows" }
-        ];
-
-        function loadState() {
-            const saved = localStorage.getItem('solo_leveling_state');
-            if(saved) {
-                state = JSON.parse(saved);
-            }
-            updateUI();
-        }
-
-        function saveState() {
-            localStorage.setItem('solo_leveling_state', JSON.stringify(state));
-            updateUI();
-        }
-
-        function updateUI() {
-            document.getElementById('player-lvl').innerText = `LVL ${state.level}`;
-            document.getElementById('stat-str').innerText = state.stats.str.toFixed(1);
-            document.getElementById('stat-end').innerText = state.stats.end.toFixed(1);
-            document.getElementById('stat-int').innerText = state.stats.int.toFixed(1);
-            document.getElementById('stat-foc').innerText = state.stats.foc.toFixed(1);
-
-            document.getElementById('hp-text').innerText = `${Math.round(state.hp)} / ${state.hpMax}`;
-            document.getElementById('hp-bar').style.width = `${(state.hp / state.hpMax) * 100}%`;
-
-            document.getElementById('mp-text').innerText = `${Math.round(state.mp)} / ${state.mpMax}`;
-            document.getElementById('mp-bar').style.width = `${Math.min(100, (state.mp / state.mpMax) * 100)}%`;
-
-            document.getElementById('xp-text').innerText = `${Math.round(state.xp)} / ${state.xpMax}`;
-            document.getElementById('xp-bar').style.width = `${(state.xp / state.xpMax) * 100}%`;
-
-            document.getElementById('boss-hp-text').innerText = `${Math.max(0, Math.round(state.bossHp))} / ${state.bossHpMax}`;
-            document.getElementById('boss-hp-bar').style.width = `${Math.max(0, (state.bossHp / state.bossHpMax) * 100)}%`;
-
-            // Update Rank based on MP
-            let currentRank = ranks[0];
-            let nextRankMp = ranks[1].mp;
-            for(let i = 0; i < ranks.length; i++) {
-                if(state.mp >= ranks[i].mp) {
-                    currentRank = ranks[i];
-                    nextRankMp = ranks[i+1] ? ranks[i+1].mp : ranks[i].mp * 2;
-                }
-            }
-            document.getElementById('player-rank').innerText = currentRank.name;
-            document.getElementById('player-title').innerText = currentRank.title;
-            state.mpMax = nextRankMp;
-        }
-
-        function addStat(type, val, mpGain, msg) {
-            state.stats[type] += val;
-            state.mp += mpGain;
-            state.xp += mpGain * 1.5;
-
-            if(state.xp >= state.xpMax) {
-                state.level++;
-                state.xp -= state.xpMax;
-                state.xpMax = Math.round(state.xpMax * 1.2);
-                showNotif("LEVEL UP!", `Du bist jetzt Level ${state.level}!`);
-            } else {
-                showNotif("QUEST ERFÜLLT", msg);
-            }
-            saveState();
-        }
-
-        function applyPenalty(type, val, hpLoss, msg) {
-            state.stats[type] = Math.max(0, state.stats[type] - val);
-            state.hp = Math.max(0, state.hp - hpLoss);
-            showNotif("PENALTY APPLIED", msg);
-            saveState();
-        }
-
-        function logReading() {
-            const input = document.getElementById('pages-input');
-            const pages = parseFloat(input.value);
-            if(pages && pages > 0) {
-                const intGain = pages * 0.1;
-                const mpGain = Math.round(pages * 1);
-                addStat('int', intGain, mpGain, `${pages} Seiten gelesen (+${intGain.toFixed(1)} INT)`);
-                input.value = '';
-            }
-        }
-
-        function attackBoss() {
-            const damage = (state.stats.str * 2) + (state.stats.int * 1.5);
-            state.bossHp -= damage;
-            if(state.bossHp <= 0) {
-                showNotif("BOSS BESIEGT!", "Du hast den Goblin Leader eliminiert! +100 MP");
-                state.mp += 100;
-                state.bossHp = state.bossHpMax = Math.round(state.bossHpMax * 1.5);
-            } else {
-                showNotif("ANGRIFF!", `Schaden verursacht: ${Math.round(damage)}`);
-            }
-            saveState();
-        }
-
-        // Timer Logic
-        let timerInterval = null;
-        let timeLeft = 25 * 60;
-
-        function toggleTimer() {
-            const btn = document.getElementById('timer-btn');
-            if(timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                btn.innerText = "START FOKUS";
-            } else {
-                btn.innerText = "PAUSE";
-                timerInterval = setInterval(() => {
-                    timeLeft--;
-                    const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-                    const s = (timeLeft % 60).toString().padStart(2, '0');
-                    document.getElementById('timer-display').innerText = `${m}:${s}`;
-                    if(timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        timerInterval = null;
-                        timeLeft = 25 * 60;
-                        btn.innerText = "START FOKUS";
-                        addStat('foc', 1.0, 20, "25 Min Deep Work (+1.0 FOC)");
-                    }
-                }, 1000);
-            }
-        }
-
-        function resetTimer() {
-            if(timerInterval) clearInterval(timerInterval);
-            timerInterval = null;
-            timeLeft = 25 * 60;
-            document.getElementById('timer-display').innerText = "25:00";
-            document.getElementById('timer-btn').innerText = "START FOKUS";
-        }
-
-        function showNotif(title, desc) {
-            document.getElementById('notif-title').innerText = title;
-            document.getElementById('notif-desc').innerText = desc;
-            const notif = document.getElementById('notification');
-            notif.classList.add('show');
-            setTimeout(() => notif.classList.remove('show'), 2500);
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        function exportData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
-            const dl = document.createElement('a');
-            dl.setAttribute("href", dataStr);
-            dl.setAttribute("download", "solo_leveling_backup.json");
-            dl.click();
-        }
-
-        function importData(e) {
-            const file = e.target.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                state = JSON.parse(evt.target.result);
-                saveState();
-                showNotif("DATEN GELADEN", "Spielfortschritt erfolgreich wiederhergestellt!");
-            };
-            reader.readAsText(file);
-        }
-
-        // Init
-        loadState();
-    </script>
-</body>
-</html>
+            <button class="btn btn-danger" style="width: 100%; margin-top: 15px; padding: 14px;" onclick="attackBoss()">⚔️ ANGRIFF
