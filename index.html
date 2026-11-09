@@ -298,7 +298,7 @@
             justify-content: space-between;
         }
 
-        /* Calendar Styling */
+        /* Calendar & Module Cards */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -337,6 +337,19 @@
             background: rgba(0, 240, 255, 0.2);
         }
 
+        .module-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .module-card.done {
+            border-color: var(--accent-gold);
+            background: rgba(255, 190, 11, 0.08);
+        }
+
         /* Inventory Items */
         .weapon-item {
             background: rgba(0, 0, 0, 0.6);
@@ -349,7 +362,6 @@
             align-items: center;
         }
 
-        /* Modal / Notification Overlays */
         #notification {
             position: fixed;
             top: 20px;
@@ -401,9 +413,10 @@
     <!-- TAB 1: DASHBOARD -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="system-panel">
-            <div class="panel-header">
-                <div class="panel-title">HUNTER STATUS HUD</div>
-                <div id="player-lvl" style="font-family: 'Orbitron'; font-weight: 900; color: var(--accent-gold); margin-top: 4px; font-size: 13px;">LEVEL 1</div>
+            <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div id="player-lvl" style="font-family: 'Orbitron'; font-weight: 900; color: var(--accent-gold); font-size: 13px;">LEVEL 1</div>
+                <div class="panel-title">STATUS HUD</div>
+                <div id="streak-badge" style="font-family: 'Orbitron'; font-weight: 900; color: #ff9e00; font-size: 12px;">🔥 0 TAGE</div>
             </div>
 
             <div class="rank-box">
@@ -485,17 +498,29 @@
             </div>
         </div>
 
-        <!-- 2. UNI & AKADEMIE LERNEN -->
+        <!-- 2. UNI-SEMESTER FORTSCHRITTS-TRACKER -->
         <div class="system-panel">
             <div class="panel-header">
-                <div class="panel-title">2. LERNEN & UNI-FACH</div>
+                <div class="panel-title">2. UNI-SEMESTER TRACKER</div>
             </div>
-            <div style="font-size: 12px; color: #a0c0e0; margin-bottom: 8px;">Trage das Fach & die gelernten Minuten ein (30 Min = +0.5 INT & +15 MP):</div>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-                <input type="text" id="study-subject-input" placeholder="Fachname (z.B. Statistik, Mathe, Info)...">
-                <div class="input-group">
-                    <input type="number" id="study-minutes-input" placeholder="Minuten gelernt...">
-                    <button class="btn" onclick="logSubjectStudy()">TRACK LERNEN</button>
+            
+            <div style="font-size: 11px; color: #a0c0e0; margin-bottom: 8px;">Neues Semester-Fach anlegen:</div>
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                <input type="text" id="module-name-input" placeholder="Fach (z.B. Statistik)..." style="flex: 2;">
+                <input type="number" id="module-total-input" placeholder="Einheiten (z.B. 12)..." style="flex: 1;">
+                <button class="btn" onclick="addUniModule()">+ ANLEGEN</button>
+            </div>
+
+            <div id="uni-modules-list"></div>
+            
+            <div style="border-top: 1px dashed rgba(0,240,255,0.2); padding-top: 10px; margin-top: 10px;">
+                <div style="font-size: 11px; color: var(--border-cyan); font-family: Orbitron; margin-bottom: 4px;">🎓 FREIES UNI-LERNEN TRACKEN</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <input type="text" id="study-subject-input" placeholder="Fachname...">
+                    <div class="input-group">
+                        <input type="number" id="study-minutes-input" placeholder="Minuten gelernt...">
+                        <button class="btn" onclick="logSubjectStudy()">TRACK LERNEN</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -553,7 +578,6 @@
                 <div class="panel-title">HUNTER LOGBUCH & KALENDER</div>
             </div>
             
-            <!-- MONTH NAVIGATION BUTTONS -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <button class="btn" style="padding: 6px 14px; font-size: 14px;" onclick="prevMonth()">◀</button>
                 <div id="calendar-month-title" style="font-family: Orbitron; font-size: 13px; color: var(--accent-gold); text-align: center; font-weight: 700;">-</div>
@@ -608,7 +632,10 @@
             stats: { str: 10.0, end: 10.0, int: 10.0, foc: 10.0 },
             clearedBosses: [],
             inventory: [],
-            logs: {}
+            logs: {},
+            streak: 0,
+            lastActiveDate: "",
+            uniModules: []
         };
 
         const ranks = [
@@ -644,17 +671,61 @@
 
         function loadState() {
             try {
-                const saved = localStorage.getItem('solo_leveling_v9');
+                const saved = localStorage.getItem('solo_leveling_v10');
                 if(saved) state = JSON.parse(saved);
+                if(!state.uniModules) state.uniModules = [];
             } catch(e) { console.log(e); }
+            
+            checkStreakAndPenalty();
             updateUI();
         }
 
         function saveState() {
             try {
-                localStorage.setItem('solo_leveling_v9', JSON.stringify(state));
+                localStorage.setItem('solo_leveling_v10', JSON.stringify(state));
             } catch(e) { console.log(e); }
             updateUI();
+        }
+
+        function checkStreakAndPenalty() {
+            const today = getTodayKey();
+            if(!state.lastActiveDate) return;
+            
+            if(state.lastActiveDate === today) return;
+
+            const lastDate = new Date(state.lastActiveDate);
+            const currDate = new Date(today);
+            const diffTime = Math.abs(currDate - lastDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if(diffDays > 1) {
+                state.streak = 0;
+                state.stats.foc = Math.max(0, state.stats.foc - 1.0);
+                state.hp = Math.max(0, state.hp - 20);
+                showNotif("SYSTEM PENALTY", "Inaktivität erkannt! Streak zurückgesetzt (-1.0 FOC | -20 HP)");
+                addLogEntry("SYSTEM PENALTY: Tage ohne Quest (-1.0 FOC, -20 HP)");
+            }
+        }
+
+        function triggerQuestActivity() {
+            const today = getTodayKey();
+            if(state.lastActiveDate !== today) {
+                const lastDate = state.lastActiveDate ? new Date(state.lastActiveDate) : null;
+                const currDate = new Date(today);
+                
+                if(lastDate) {
+                    const diffTime = Math.abs(currDate - lastDate);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if(diffDays === 1) {
+                        state.streak++;
+                    } else {
+                        state.streak = 1;
+                    }
+                } else {
+                    state.streak = 1;
+                }
+                state.lastActiveDate = today;
+            }
         }
 
         function addLogEntry(text) {
@@ -666,6 +737,7 @@
 
         function updateUI() {
             document.getElementById('player-lvl').innerText = `LEVEL ${state.level}`;
+            document.getElementById('streak-badge').innerText = `🔥 ${state.streak || 0} TAGE`;
             document.getElementById('stat-str').innerText = state.stats.str.toFixed(1);
             document.getElementById('stat-end').innerText = state.stats.end.toFixed(1);
             document.getElementById('stat-int').innerText = state.stats.int.toFixed(1);
@@ -695,6 +767,7 @@
             renderInventory();
             renderDungeons();
             renderCalendar();
+            renderUniModules();
         }
 
         function renderInventory() {
@@ -746,7 +819,83 @@
             });
         }
 
+        /* Uni Module System */
+        function addUniModule() {
+            const nameInput = document.getElementById('module-name-input');
+            const totalInput = document.getElementById('module-total-input');
+            const name = nameInput.value.trim();
+            const total = parseInt(totalInput.value);
+
+            if(name && total > 0) {
+                if(!state.uniModules) state.uniModules = [];
+                state.uniModules.push({
+                    id: 'mod_' + Date.now(),
+                    name: name,
+                    completed: 0,
+                    total: total,
+                    done: false
+                });
+                nameInput.value = '';
+                totalInput.value = '';
+                saveState();
+                showNotif("MODULE HINZUGEFÜGT", `'${name}' im Semester-Tracker angelegt!`);
+            }
+        }
+
+        function progressUniModule(id) {
+            triggerQuestActivity();
+            const mod = state.uniModules.find(m => m.id === id);
+            if(!mod || mod.done) return;
+
+            mod.completed++;
+            addLogEntry(`Uni-Einheit: ${mod.name} (${mod.completed}/${mod.total})`);
+
+            if(mod.completed >= mod.total) {
+                mod.completed = mod.total;
+                mod.done = true;
+                addStat('int', 5.0, 50, `FACH BESTANDEN! ${mod.name} (+5.0 INT | +50 MP | +200 XP)`, `🏆 SEMESTER-FACH BESTANDEN: ${mod.name}! (+5 INT)`);
+                state.xp += 200;
+            } else {
+                addStat('int', 0.3, 8, `${mod.name}: +1 Einheit (+0.3 INT | +8 MP)`);
+            }
+            saveState();
+        }
+
+        function renderUniModules() {
+            const list = document.getElementById('uni-modules-list');
+            if(!list) return;
+
+            if(!state.uniModules || state.uniModules.length === 0) {
+                list.innerHTML = `<div style="font-size: 11px; color: #7a8b9e; text-align: center; margin: 6px 0;">Noch keine Semester-Fächer angelegt.</div>`;
+                return;
+            }
+
+            list.innerHTML = '';
+            state.uniModules.forEach(mod => {
+                const card = document.createElement('div');
+                card.className = `module-card ${mod.done ? 'done' : ''}`;
+                const pct = Math.round((mod.completed / mod.total) * 100);
+
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-family: Orbitron; font-size: 12px; font-weight: 700; color: ${mod.done ? 'var(--accent-gold)' : 'var(--border-cyan)'};">
+                            ${mod.done ? '🏆' : '📚'} ${mod.name}
+                        </div>
+                        <div style="font-size: 11px; color: #a0c0e0;">${mod.completed} / ${mod.total} (${pct}%)</div>
+                    </div>
+                    <div class="bar-container" style="margin: 6px 0 8px 0;">
+                        <div class="bar-bg"><div class="bar-fill mp-fill" style="width: ${pct}%;"></div></div>
+                    </div>
+                    <button class="btn" style="width: 100%; font-size: 9px;" ${mod.done ? 'disabled' : ''} onclick="progressUniModule('${mod.id}')">
+                        ${mod.done ? 'FACH BESTANDEN' : '+1 EINHEIT LERNEN (+INT)'}
+                    </button>
+                `;
+                list.appendChild(card);
+            });
+        }
+
         function addStat(type, val, mpGain, msg, logText) {
+            triggerQuestActivity();
             state.stats[type] += val;
             state.mp += mpGain;
             state.xp += mpGain * 1.5;
@@ -819,6 +968,7 @@
             const boss = dungeons.find(d => d.id === bossId);
             if(!boss || state.clearedBosses.includes(bossId)) return;
 
+            triggerQuestActivity();
             state.clearedBosses.push(bossId);
             state.inventory.push({ name: boss.weapon, desc: boss.weaponDesc });
             addLogEntry(`Boss Besiegt: ${boss.boss} (Loot: ${boss.weapon})`);
@@ -834,7 +984,7 @@
             document.getElementById('chest-modal').style.display = 'none';
         }
 
-        /* Calendar Logic & Navigation */
+        /* Calendar Logic */
         function renderCalendar() {
             const container = document.getElementById('calendar-days-container');
             container.innerHTML = '';
