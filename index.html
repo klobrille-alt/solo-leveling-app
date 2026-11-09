@@ -392,7 +392,7 @@
     <!-- LOOT CHEST MODAL POPUP -->
     <div id="chest-modal">
         <div style="font-family: 'Orbitron'; font-size: 24px; color: var(--accent-gold); font-weight: 900; text-shadow: 0 0 20px var(--accent-gold);">TREASURE CHEST DISCOVERED!</div>
-        <div style="font-size: 72px; margin: 20px 0; animation: bounce 1s infinite alternate;">🎁</div>
+        <div style="font-size: 72px; margin: 20px 0;">🎁</div>
         <div id="chest-weapon-name" style="font-family: 'Orbitron'; font-size: 20px; color: var(--border-cyan); margin-bottom: 10px;">-</div>
         <div id="chest-weapon-desc" style="font-size: 13px; color: #a0c0e0; margin-bottom: 25px;">-</div>
         <button class="btn" style="padding: 14px 28px; font-size: 13px;" onclick="closeChestModal()">IN INS ARSENAL AUFNEHMEN</button>
@@ -454,7 +454,7 @@
         <!-- WEAPONS INVENTORY -->
         <div class="system-panel">
             <div class="panel-header">
-                <div class="panel-title">SOLO ARSENAL (DOLCHE & WAFEN)</div>
+                <div class="panel-title">SOLO ARSENAL (DOLCHE & WAFFEN)</div>
             </div>
             <div id="inventory-list" style="font-size: 12px; color: #7a8b9e; text-align: center;">Bisher keine Legenden-Waffen gesammelt. Besiege Gate-Bosse!</div>
         </div>
@@ -466,7 +466,7 @@
         </div>
     </div>
 
-    <!-- TAB 2: QUESTS (NEU STRUKTURIERT) -->
+    <!-- TAB 2: QUESTS -->
     <div id="tab-quests" class="tab-content">
         
         <!-- 1. PHYSICAL TRAINING -->
@@ -552,7 +552,13 @@
             <div class="panel-header">
                 <div class="panel-title">HUNTER LOGBUCH & KALENDER</div>
             </div>
-            <div id="calendar-month-title" style="font-family: Orbitron; font-size: 13px; color: var(--accent-gold); text-align: center; margin-bottom: 8px;">-</div>
+            
+            <!-- MONTH NAVIGATION BUTTONS -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <button class="btn" style="padding: 6px 14px; font-size: 14px;" onclick="prevMonth()">◀</button>
+                <div id="calendar-month-title" style="font-family: Orbitron; font-size: 13px; color: var(--accent-gold); text-align: center; font-weight: 700;">-</div>
+                <button class="btn" style="padding: 6px 14px; font-size: 14px;" onclick="nextMonth()">▶</button>
+            </div>
             
             <div class="calendar-grid">
                 <div class="calendar-day-header">MO</div>
@@ -602,7 +608,7 @@
             stats: { str: 10.0, end: 10.0, int: 10.0, foc: 10.0 },
             clearedBosses: [],
             inventory: [],
-            logs: {} // "YYYY-MM-DD": ["Gym Session", "Statistik gelernt"]
+            logs: {}
         };
 
         const ranks = [
@@ -625,6 +631,8 @@
         ];
 
         let selectedCalendarDate = getTodayKey();
+        let currentCalendarYear = new Date().getFullYear();
+        let currentCalendarMonth = new Date().getMonth();
 
         function getTodayKey() {
             const today = new Date();
@@ -636,7 +644,7 @@
 
         function loadState() {
             try {
-                const saved = localStorage.getItem('solo_leveling_v8');
+                const saved = localStorage.getItem('solo_leveling_v9');
                 if(saved) state = JSON.parse(saved);
             } catch(e) { console.log(e); }
             updateUI();
@@ -644,7 +652,7 @@
 
         function saveState() {
             try {
-                localStorage.setItem('solo_leveling_v8', JSON.stringify(state));
+                localStorage.setItem('solo_leveling_v9', JSON.stringify(state));
             } catch(e) { console.log(e); }
             updateUI();
         }
@@ -811,14 +819,12 @@
             const boss = dungeons.find(d => d.id === bossId);
             if(!boss || state.clearedBosses.includes(bossId)) return;
 
-            // One-time defeat
             state.clearedBosses.push(bossId);
             state.inventory.push({ name: boss.weapon, desc: boss.weaponDesc });
             addLogEntry(`Boss Besiegt: ${boss.boss} (Loot: ${boss.weapon})`);
 
             saveState();
 
-            // Open Loot Chest Modal
             document.getElementById('chest-weapon-name').innerText = `🗡️ ${boss.weapon}`;
             document.getElementById('chest-weapon-desc').innerText = boss.weaponDesc;
             document.getElementById('chest-modal').style.display = 'flex';
@@ -828,14 +834,13 @@
             document.getElementById('chest-modal').style.display = 'none';
         }
 
-        /* Calendar Logic */
+        /* Calendar Logic & Navigation */
         function renderCalendar() {
             const container = document.getElementById('calendar-days-container');
             container.innerHTML = '';
 
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
+            const year = currentCalendarYear;
+            const month = currentCalendarMonth;
 
             const monthNames = ["JANUAR", "FEBRUAR", "MÄRZ", "APRIL", "MAI", "JUNI", "JULI", "AUGUST", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DEZEMBER"];
             document.getElementById('calendar-month-title').innerText = `${monthNames[month]} ${year}`;
@@ -867,6 +872,24 @@
             }
 
             renderDayLogs(selectedCalendarDate);
+        }
+
+        function prevMonth() {
+            currentCalendarMonth--;
+            if(currentCalendarMonth < 0) {
+                currentCalendarMonth = 11;
+                currentCalendarYear--;
+            }
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentCalendarMonth++;
+            if(currentCalendarMonth > 11) {
+                currentCalendarMonth = 0;
+                currentCalendarYear++;
+            }
+            renderCalendar();
         }
 
         function selectCalendarDate(dateKey) {
