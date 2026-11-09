@@ -36,6 +36,7 @@
             background-attachment: fixed;
         }
 
+        /* Fixed Navigation Bar at Bottom */
         .nav-tabs {
             display: flex;
             justify-content: space-around;
@@ -45,9 +46,9 @@
             right: 0;
             background: rgba(7, 15, 33, 0.98);
             border-top: 2px solid var(--border-color);
-            box-shadow: 0 -5px 20px rgba(0, 240, 255, 0.2);
+            box-shadow: 0 -5px 20px rgba(0, 240, 255, 0.3);
             padding: 12px 0;
-            z-index: 100;
+            z-index: 9999; /* Garantiert immer im Vordergrund */
         }
 
         .tab-btn {
@@ -64,6 +65,7 @@
             gap: 5px;
             cursor: pointer;
             width: 33%;
+            user-select: none;
         }
 
         .tab-btn.active {
@@ -79,6 +81,7 @@
             display: block;
         }
 
+        /* System Panels */
         .system-panel {
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
@@ -101,6 +104,7 @@
             align-items: center;
         }
 
+        /* Dashboard Specifics */
         .rank-box {
             text-align: center;
             padding: 15px 0;
@@ -154,6 +158,7 @@
             text-shadow: 0 0 8px var(--accent-glow);
         }
 
+        /* Progress Bars */
         .bar-container {
             margin-bottom: 12px;
         }
@@ -183,6 +188,7 @@
         .mp-fill { background: var(--accent-blue); box-shadow: 0 0 10px var(--accent-blue); }
         .xp-fill { background: var(--accent-gold); box-shadow: 0 0 10px var(--accent-gold); }
 
+        /* Inputs & Buttons */
         .input-group {
             display: flex;
             gap: 10px;
@@ -222,6 +228,7 @@
             background: rgba(255, 51, 102, 0.2);
         }
 
+        /* Notifications */
         #notification {
             position: fixed;
             top: 20px;
@@ -233,7 +240,7 @@
             padding: 14px 24px;
             border-radius: 8px;
             text-align: center;
-            z-index: 1000;
+            z-index: 10000;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
         }
@@ -360,7 +367,7 @@
         </div>
     </div>
 
-    <!-- NAVIGATION TABS -->
+    <!-- LOWER NAVIGATION TABS -->
     <div class="nav-tabs">
         <button class="tab-btn active" id="btn-dashboard" onclick="switchTab('dashboard')">
             <span style="font-size: 18px;">🛡️</span> STATUS
@@ -409,9 +416,163 @@
         }
 
         function updateUI() {
-            document.getElementById('player-lvl').innerText = `LVL ${state.level}`; document.getElementById('stat-str').innerText = state.stats.str.toFixed(1); document.getElementById('stat-end').innerText = state.stats.end.toFixed(1); document.getElementById('stat-int').innerText = state.stats.int.toFixed(1); document.getElementById('stat-foc').innerText = state.stats.foc.toFixed(1);  document.getElementById('hp-text').innerText = `${Math.round(state.hp)} / ${state.hpMax} HP`; document.getElementById('hp-bar').style.width = `${(state.hp / state.hpMax) * 100}%`;
+            document.getElementById('player-lvl').innerText = `LVL ${state.level}`;
+            document.getElementById('stat-str').innerText = state.stats.str.toFixed(1);
+            document.getElementById('stat-end').innerText = state.stats.end.toFixed(1);
+            document.getElementById('stat-int').innerText = state.stats.int.toFixed(1);
+            document.getElementById('stat-foc').innerText = state.stats.foc.toFixed(1);
 
-            document.getElementById('xp-text').innerText = `${Math.round(state.xp)} /${state.xpMax} XP`;
-            document.getElementById('xp-bar').style.width = `${(state.xp / state.xpMax) * 100}\%`;  let currentRank = ranks[0]; let nextRankMp = ranks[1].mp; for(let i = 0; i < ranks.length; i++) { if(state.mp >= ranks[i].mp) { currentRank = ranks[i]; nextRankMp = ranks[i+1] ? ranks[i+1].mp : ranks[i].mp * 2; } } document.getElementById('player-rank').innerText = currentRank.name; document.getElementById('player-title').innerText = currentRank.title; state.mpMax = nextRankMp;  document.getElementById('mp-text').innerText = `${Math.round(state.mp)} / ${state.mpMax} MP`; document.getElementById('mp-bar').style.width = `${Math.min(100, (state.mp / state.mpMax) * 100)}%`;
+            document.getElementById('hp-text').innerText = `${Math.round(state.hp)} / ${state.hpMax} HP`;
+            document.getElementById('hp-bar').style.width = `${(state.hp / state.hpMax) * 100}%`;
 
-            document.getElementById('boss-hp-text').innerText = `${Math.max(0, Math.round(state.bossHp))} /${state.boss
+            document.getElementById('xp-text').innerText = `${Math.round(state.xp)} / ${state.xpMax} XP`;
+            document.getElementById('xp-bar').style.width = `${(state.xp / state.xpMax) * 100}%`;
+
+            let currentRank = ranks[0];
+            let nextRankMp = ranks[1].mp;
+            for(let i = 0; i < ranks.length; i++) {
+                if(state.mp >= ranks[i].mp) {
+                    currentRank = ranks[i];
+                    nextRankMp = ranks[i+1] ? ranks[i+1].mp : ranks[i].mp * 2;
+                }
+            }
+            document.getElementById('player-rank').innerText = currentRank.name;
+            document.getElementById('player-title').innerText = currentRank.title;
+            state.mpMax = nextRankMp;
+
+            document.getElementById('mp-text').innerText = `${Math.round(state.mp)} / ${state.mpMax} MP`;
+            document.getElementById('mp-bar').style.width = `${Math.min(100, (state.mp / state.mpMax) * 100)}%`;
+
+            document.getElementById('boss-hp-text').innerText = `${Math.max(0, Math.round(state.bossHp))} / ${state.bossHpMax}`;
+            document.getElementById('boss-hp-bar').style.width = `${Math.max(0, (state.bossHp / state.bossHpMax) * 100)}%`;
+        }
+
+        function addStat(type, val, mpGain, msg) {
+            state.stats[type] += val;
+            state.mp += mpGain;
+            state.xp += mpGain * 1.5;
+
+            if(state.xp >= state.xpMax) {
+                state.level++;
+                state.xp -= state.xpMax;
+                state.xpMax = Math.round(state.xpMax * 1.25);
+                showNotif("LEVEL UP!", `Du hast Level ${state.level} erreicht!`);
+            } else {
+                showNotif("QUEST ERFÜLLT", msg);
+            }
+            saveState();
+        }
+
+        function applyPenalty(type, val, hpLoss, msg) {
+            state.stats[type] = Math.max(0, state.stats[type] - val);
+            state.hp = Math.max(0, state.hp - hpLoss);
+            showNotif("PENALTY APPLIED", msg);
+            saveState();
+        }
+
+        function logReading() {
+            const input = document.getElementById('pages-input');
+            const pages = parseFloat(input.value);
+            if(pages && pages > 0) {
+                const intGain = pages * 0.1;
+                const mpGain = Math.round(pages * 1);
+                addStat('int', intGain, mpGain, `${pages} Seiten (+${intGain.toFixed(1)} INT | +${mpGain} MP)`);
+                input.value = '';
+            }
+        }
+
+        function attackBoss() {
+            const damage = (state.stats.str * 2) + (state.stats.int * 1.5);
+            state.bossHp -= damage;
+            if(state.bossHp <= 0) {
+                showNotif("DUNGEON CLEARED!", "Goblin Leader besiegt! +100 MP");
+                state.mp += 100;
+                state.bossHpMax = Math.round(state.bossHpMax * 1.5);
+                state.bossHp = state.bossHpMax;
+            } else {
+                showNotif("SCHADEN!", `Du fügst dem Boss ${Math.round(damage)} Schaden zu!`);
+            }
+            saveState();
+        }
+
+        let timerInterval = null;
+        let timeLeft = 25 * 60;
+
+        function toggleTimer() {
+            const btn = document.getElementById('timer-btn');
+            if(timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                btn.innerText = "START FOKUS";
+            } else {
+                btn.innerText = "PAUSE";
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                    const s = (timeLeft % 60).toString().padStart(2, '0');
+                    document.getElementById('timer-display').innerText = `${m}:${s}`;
+                    if(timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        timeLeft = 25 * 60;
+                        btn.innerText = "START FOKUS";
+                        addStat('foc', 1.0, 20, "25 Min Fokus (+1.0 FOC | +20 MP)");
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
+            timeLeft = 25 * 60;
+            document.getElementById('timer-display').innerText = "25:00";
+            document.getElementById('timer-btn').innerText = "START FOKUS";
+        }
+
+        function showNotif(title, desc) {
+            document.getElementById('notif-title').innerText = title;
+            document.getElementById('notif-desc').innerText = desc;
+            const notif = document.getElementById('notification');
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 2500);
+        }
+
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            contents.forEach(el => el.classList.remove('active'));
+            buttons.forEach(el => el.classList.remove('active'));
+            
+            const targetContent = document.getElementById(`tab-${tabId}`);
+            const targetBtn = document.getElementById(`btn-${tabId}`);
+
+            if (targetContent) targetContent.classList.add('active');
+            if (targetBtn) targetBtn.classList.add('active');
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", "solo_leveling_backup.json");
+            dl.click();
+        }
+
+        function importData(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                state = JSON.parse(evt.target.result);
+                saveState();
+                showNotif("ERFOLG", "Daten wiederhergestellt!");
+            };
+            reader.readAsText(file);
+        }
+
+        loadState();
+    </script>
+</body>
+</html>
