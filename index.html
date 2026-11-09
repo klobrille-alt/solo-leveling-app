@@ -36,7 +36,6 @@
             background-attachment: fixed;
         }
 
-        /* Fixed Navigation Bar at Bottom */
         .nav-tabs {
             display: flex;
             justify-content: space-around;
@@ -80,7 +79,6 @@
             display: block;
         }
 
-        /* System Panels */
         .system-panel {
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
@@ -103,7 +101,6 @@
             align-items: center;
         }
 
-        /* Dashboard Specifics */
         .rank-box {
             text-align: center;
             padding: 15px 0;
@@ -157,7 +154,6 @@
             text-shadow: 0 0 8px var(--accent-glow);
         }
 
-        /* Progress Bars */
         .bar-container {
             margin-bottom: 12px;
         }
@@ -187,7 +183,6 @@
         .mp-fill { background: var(--accent-blue); box-shadow: 0 0 10px var(--accent-blue); }
         .xp-fill { background: var(--accent-gold); box-shadow: 0 0 10px var(--accent-gold); }
 
-        /* Inputs & Buttons */
         .input-group {
             display: flex;
             gap: 10px;
@@ -227,7 +222,6 @@
             background: rgba(255, 51, 102, 0.2);
         }
 
-        /* Notifications */
         #notification {
             position: fixed;
             top: 20px;
@@ -256,7 +250,7 @@
         <div id="notif-desc" style="font-size: 12px; margin-top: 4px;">+1.0 INT | +10 MP</div>
     </div>
 
-    <!-- TAB 1: DASHBOARD (REINES PROFIL & STATS) -->
+    <!-- TAB 1: DASHBOARD -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="system-panel">
             <div class="panel-title">
@@ -314,7 +308,7 @@
         </div>
     </div>
 
-    <!-- TAB 2: QUESTS (AUFGABEN TRACKEN) -->
+    <!-- TAB 2: QUESTS -->
     <div id="tab-quests" class="tab-content">
         <div class="system-panel">
             <div class="panel-title">DAILY QUEST: LESEN (INT)</div>
@@ -362,4 +356,62 @@
                 <div class="bar-label"><span>BOSS HP</span><span id="boss-hp-text">500 / 500</span></div>
                 <div class="bar-bg"><div id="boss-hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div></div>
             </div>
-            <button class="btn btn-danger" style="width: 100%; margin-top: 15px; padding: 14px;" onclick="attackBoss()">⚔️ ANGRIFF
+            <button class="btn btn-danger" style="width: 100%; margin-top: 15px; padding: 14px;" onclick="attackBoss()">⚔️ ANGRIFF (SCHADEN DURCH STR & INT)</button>
+        </div>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" id="btn-dashboard" onclick="switchTab('dashboard')">
+            <span style="font-size: 18px;">🛡️</span> STATUS
+        </button>
+        <button class="tab-btn" id="btn-quests" onclick="switchTab('quests')">
+            <span style="font-size: 18px;">⚡</span> QUESTS
+        </button>
+        <button class="tab-btn" id="btn-boss" onclick="switchTab('boss')">
+            <span style="font-size: 18px;">⚔️</span> DUNGEON
+        </button>
+    </div>
+
+    <script>
+        let state = {
+            level: 1,
+            xp: 0,
+            xpMax: 100,
+            mp: 0,
+            mpMax: 100,
+            hp: 100,
+            hpMax: 100,
+            stats: { str: 10.0, end: 10.0, int: 10.0, foc: 10.0 },
+            bossHp: 500,
+            bossHpMax: 500
+        };
+
+        const ranks = [
+            { mp: 0, name: "E-RANK", title: "Novice Hunter" },
+            { mp: 100, name: "D-RANK", title: "Rookie Hunter" },
+            { mp: 300, name: "C-RANK", title: "Veteran Hunter" },
+            { mp: 600, name: "B-RANK", title: "Elite Hunter" },
+            { mp: 1000, name: "A-RANK", title: "High-Rank Hunter" },
+            { mp: 2000, name: "S-RANK", title: "Shadow Lord" },
+            { mp: 5000, name: "SHADOW MONARCH", title: "Monarch of Shadows" }
+        ];
+
+        function loadState() {
+            const saved = localStorage.getItem('solo_leveling_v3');
+            if(saved) state = JSON.parse(saved);
+            updateUI();
+        }
+
+        function saveState() {
+            localStorage.setItem('solo_leveling_v3', JSON.stringify(state));
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('player-lvl').innerText = `LVL ${state.level}`; document.getElementById('stat-str').innerText = state.stats.str.toFixed(1); document.getElementById('stat-end').innerText = state.stats.end.toFixed(1); document.getElementById('stat-int').innerText = state.stats.int.toFixed(1); document.getElementById('stat-foc').innerText = state.stats.foc.toFixed(1);  document.getElementById('hp-text').innerText = `${Math.round(state.hp)} / ${state.hpMax} HP`; document.getElementById('hp-bar').style.width = `${(state.hp / state.hpMax) * 100}%`;
+
+            document.getElementById('xp-text').innerText = `${Math.round(state.xp)} /${state.xpMax} XP`;
+            document.getElementById('xp-bar').style.width = `${(state.xp / state.xpMax) * 100}\%`;  let currentRank = ranks[0]; let nextRankMp = ranks[1].mp; for(let i = 0; i < ranks.length; i++) { if(state.mp >= ranks[i].mp) { currentRank = ranks[i]; nextRankMp = ranks[i+1] ? ranks[i+1].mp : ranks[i].mp * 2; } } document.getElementById('player-rank').innerText = currentRank.name; document.getElementById('player-title').innerText = currentRank.title; state.mpMax = nextRankMp;  document.getElementById('mp-text').innerText = `${Math.round(state.mp)} / ${state.mpMax} MP`; document.getElementById('mp-bar').style.width = `${Math.min(100, (state.mp / state.mpMax) * 100)}%`;
+
+            document.getElementById('boss-hp-text').innerText = `${Math.max(0, Math.round(state.bossHp))} /${state.boss
