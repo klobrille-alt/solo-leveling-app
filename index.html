@@ -267,14 +267,12 @@
             background: linear-gradient(135deg, rgba(255, 42, 109, 0.3), rgba(100, 0, 30, 0.4));
         }
 
-        /* Gate / Boss Selector Cards */
         .boss-card {
             background: rgba(5, 3, 15, 0.8);
             border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 6px;
             padding: 14px;
             margin-bottom: 12px;
-            transition: all 0.3s ease;
         }
 
         .boss-card.locked {
@@ -387,6 +385,30 @@
 
     <!-- TAB 2: QUESTS -->
     <div id="tab-quests" class="tab-content">
+
+        <!-- SCREEN TIME ANALYSIS -->
+        <div class="system-panel">
+            <div class="panel-header">
+                <div class="panel-title">SCREEN-TIME LOGGING</div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 12px; color: #a0c0e0; margin-bottom: 4px;">🎓 Lernen & Bildung (YouTube / Doku / PDF):</div>
+                <div class="input-group">
+                    <input type="number" id="study-time-input" placeholder="Minuten gelernt...">
+                    <button class="btn" onclick="logStudyTime()">BUFF (+FOC)</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <div style="font-size: 12px; color: var(--accent-red); margin-bottom: 4px;">📱 Social Media (TikTok / Insta / Shorts):</div>
+                <div class="input-group">
+                    <input type="number" id="social-time-input" placeholder="Minuten gescrollt...">
+                    <button class="btn btn-danger" onclick="logSocialTime()">CHECK</button>
+                </div>
+            </div>
+        </div>
+
         <div class="system-panel">
             <div class="panel-header">
                 <div class="panel-title">DAILY QUEST: READ & LEARN</div>
@@ -418,16 +440,6 @@
             <div style="display: flex; gap: 10px;">
                 <button class="btn" style="flex: 1;" onclick="toggleTimer()" id="timer-btn">START FOKUS</button>
                 <button class="btn btn-danger" onclick="resetTimer()">RESET</button>
-            </div>
-        </div>
-
-        <div class="system-panel" style="border-color: var(--accent-red);">
-            <div class="panel-header">
-                <div class="panel-title" style="color: var(--accent-red);">PENALTY ZONE</div>
-            </div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button class="btn btn-danger" style="flex: 1;" onclick="applyPenalty('foc', 0.5, 10, 'Ablenkung (-0.5 FOC)')">📱 Social Media (-FOC)</button>
-                <button class="btn btn-danger" style="flex: 1;" onclick="applyPenalty('str', 1.0, 20, 'Gym geschwänzt (-1 STR)')">🛋️ Faulheit (-STR)</button>
             </div>
         </div>
     </div>
@@ -469,13 +481,13 @@
         };
 
         const ranks = [
-            { mp: 0, name: "E-RANK", title: "Novice Hunter", minMp: 0 },
-            { mp: 100, name: "D-RANK", title: "Rookie Hunter", minMp: 100 },
-            { mp: 300, name: "C-RANK", title: "Veteran Hunter", minMp: 300 },
-            { mp: 600, name: "B-RANK", title: "Elite Hunter", minMp: 600 },
-            { mp: 1000, name: "A-RANK", title: "High-Rank Hunter", minMp: 1000 },
-            { mp: 2000, name: "S-RANK", title: "Shadow Lord", minMp: 2000 },
-            { mp: 5000, name: "SHADOW MONARCH", title: "Monarch of Shadows", minMp: 5000 }
+            { mp: 0, name: "E-RANK", title: "Novice Hunter" },
+            { mp: 100, name: "D-RANK", title: "Rookie Hunter" },
+            { mp: 300, name: "C-RANK", title: "Veteran Hunter" },
+            { mp: 600, name: "B-RANK", title: "Elite Hunter" },
+            { mp: 1000, name: "A-RANK", title: "High-Rank Hunter" },
+            { mp: 2000, name: "S-RANK", title: "Shadow Lord" },
+            { mp: 5000, name: "SHADOW MONARCH", title: "Monarch of Shadows" }
         ];
 
         const dungeons = [
@@ -489,7 +501,7 @@
 
         function loadState() {
             try {
-                const saved = localStorage.getItem('solo_leveling_v6');
+                const saved = localStorage.getItem('solo_leveling_v7');
                 if(saved) state = JSON.parse(saved);
             } catch(e) { console.log(e); }
             updateUI();
@@ -497,7 +509,7 @@
 
         function saveState() {
             try {
-                localStorage.setItem('solo_leveling_v6', JSON.stringify(state));
+                localStorage.setItem('solo_leveling_v7', JSON.stringify(state));
             } catch(e) { console.log(e); }
             updateUI();
         }
@@ -543,8 +555,6 @@
         function renderDungeons() {
             const list = document.getElementById('dungeon-list');
             list.innerHTML = '';
-            
-            const currentRank = getCurrentRankObj();
 
             dungeons.forEach(d => {
                 const isLocked = state.mp < d.reqMp;
@@ -570,7 +580,7 @@
 
         function addStat(type, val, mpGain, msg) {
             state.stats[type] += val;
-            state.mp += mpGain; // Mana/Rank erhöht sich ausschließlich hier durch Stats!
+            state.mp += mpGain;
             state.xp += mpGain * 1.5;
 
             if(state.xp >= state.xpMax) {
@@ -591,6 +601,33 @@
             saveState();
         }
 
+        function logStudyTime() {
+            const input = document.getElementById('study-time-input');
+            const mins = parseFloat(input.value);
+            if(mins && mins > 0) {
+                const focGain = (mins / 30) * 0.5;
+                const mpGain = Math.round((mins / 30) * 15);
+                addStat('foc', focGain, mpGain, `${mins} Min Bildung (+${focGain.toFixed(1)} FOC | +${mpGain} MP)`);
+                input.value = '';
+            }
+        }
+
+        function logSocialTime() {
+            const input = document.getElementById('social-time-input');
+            const mins = parseFloat(input.value);
+            if(mins && mins > 0) {
+                if(mins <= 30) {
+                    showNotif("DISZIPLIN GEHALTEN", `${mins} Min Social Media ist akzeptabel!`);
+                } else {
+                    const penaltyMins = mins - 30;
+                    const focLoss = (penaltyMins / 30) * 0.5;
+                    const hpLoss = Math.round((penaltyMins / 30) * 10);
+                    applyPenalty('foc', focLoss, hpLoss, `${mins} Min Social Media (-${focLoss.toFixed(1)} FOC | -${hpLoss} HP)`);
+                }
+                input.value = '';
+            }
+        }
+
         function logReading() {
             const input = document.getElementById('pages-input');
             const pages = parseFloat(input.value);
@@ -606,7 +643,6 @@
             const boss = dungeons.find(d => d.id === bossId);
             if(!boss) return;
 
-            // Damage calculated purely from Stats
             const damage = (state.stats.str * 2.5) + (state.stats.int * 2) + (state.stats.end * 1.5);
             boss.hp -= damage;
 
@@ -614,14 +650,13 @@
                 boss.hp = 0;
                 showNotif("GATE CLEARED!", `${boss.boss} besiegt! +${boss.xpReward} System XP!`);
                 state.xp += boss.xpReward;
-                
-                // Check Level Up after Boss XP
+
                 if(state.xp >= state.xpMax) {
                     state.level++;
                     state.xp -= state.xpMax;
                     state.xpMax = Math.round(state.xpMax * 1.25);
                 }
-                
+
                 setTimeout(() => { boss.hp = boss.maxHp; saveState(); }, 3000);
             } else {
                 showNotif("CRITICAL HIT!", `Du fügst ${boss.boss} ${Math.round(damage)} Schaden zu!`);
