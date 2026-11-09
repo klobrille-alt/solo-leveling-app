@@ -1,888 +1,569 @@
 <!DOCTYPE html>
-<html lang="de" class="dark">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Solo Leveling System</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- React & ReactDOM -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        system: {
-                            bg: '#050b14',
-                            card: '#0a1526',
-                            border: '#00e5ff',
-                            text: '#e0f7fc',
-                            neonBlue: '#00f0ff',
-                            neonPurple: '#a855f7',
-                            neonRed: '#ff2a6d',
-                            neonGold: '#fbbf24',
-                            glow: 'rgba(0, 240, 255, 0.25)'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['System-UI', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-                        mono: ['Courier New', 'monospace']
-                    },
-                    animation: {
-                        'pulse-glow': 'pulseGlow 2s infinite alternate',
-                        'level-up': 'levelUp 0.8s ease-out forwards',
-                        'boss-shake': 'bossShake 0.4s ease-in-out'
-                    },
-                    keyframes: {
-                        pulseGlow: {
-                            '0%': { boxShadow: '0 0 10px rgba(0, 240, 255, 0.3), inset 0 0 10px rgba(0, 240, 255, 0.1)' },
-                            '100%': { boxShadow: '0 0 25px rgba(0, 240, 255, 0.7), inset 0 0 15px rgba(0, 240, 255, 0.3)' }
-                        },
-                        levelUp: {
-                            '0%': { transform: 'scale(0.8)', opacity: '0' },
-                            '50%': { transform: 'scale(1.1)', opacity: '1' },
-                            '100%': { transform: 'scale(1)', opacity: '1' }
-                        },
-                        bossShake: {
-                            '0%, 100%': { transform: 'translateX(0)' },
-                            '20%, 60%': { transform: 'translateX(-10px)' },
-                            '40%, 80%': { transform: 'translateX(10px)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        /* iOS Safari Safe Area and PWA Styling */
-        body {
-            background-color: #030712;
-            color: #e0f7fc;
-            touch-action: manipulation;
+        :root {
+            --bg-color: #050b14;
+            --panel-bg: rgba(10, 25, 47, 0.85);
+            --border-color: #00f0ff;
+            --text-color: #e0f7fc;
+            --accent-blue: #00a8ff;
+            --accent-glow: #00f0ff;
+            --accent-red: #ff3366;
+            --accent-gold: #ffd700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            overflow-x: hidden;
         }
 
-        .system-glass {
-            background: linear-gradient(135deg, rgba(10, 21, 38, 0.85) 0%, rgba(5, 11, 20, 0.95) 100%);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.15);
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 15px;
+            padding-bottom: 80px;
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(0, 168, 255, 0.15), transparent 40%),
+                linear-gradient(to bottom, #030710, #050b14);
+            background-attachment: fixed;
         }
 
-        .system-glass-red {
-            background: linear-gradient(135deg, rgba(38, 10, 15, 0.85) 0%, rgba(20, 5, 8, 0.95) 100%);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 42, 109, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 42, 109, 0.2);
+        /* Nav Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 11, 20, 0.95);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 0;
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
 
-        .system-glass-gold {
-            background: linear-gradient(135deg, rgba(38, 30, 10, 0.85) 0%, rgba(20, 16, 5, 0.95) 100%);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(251, 191, 36, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(251, 191, 36, 0.2);
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #5a7b9c;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
         }
 
-        .system-btn {
+        .tab-btn.active {
+            color: var(--accent-glow);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Panel Styling */
+        .system-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
             position: relative;
-            transition: all 0.2s ease;
-            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
         }
 
-        .system-btn:active {
-            transform: scale(0.96);
+        .panel-title {
+            font-size: 14px;
+            color: var(--accent-glow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
+        /* Dashboard Styles */
+        .rank-header {
+            text-align: center;
+            padding: 10px 0;
         }
-        ::-webkit-scrollbar-track {
-            background: #050b14;
+
+        .rank-badge {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px var(--accent-gold);
+            letter-spacing: 2px;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #00f0ff;
-            border-radius: 2px;
+
+        .rank-title {
+            font-size: 12px;
+            color: #8ab4f8;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 4px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-name {
+            font-size: 11px;
+            color: #7b9bb9;
+            letter-spacing: 1px;
+        }
+
+        .stat-val {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 4px;
+            text-shadow: 0 0 5px var(--border-color);
+        }
+
+        /* Progress Bars */
+        .bar-container {
+            margin-bottom: 10px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+
+        .bar-bg {
+            background: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .bar-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .hp-fill { background: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
+        .mp-fill { background: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue); }
+        .xp-fill { background: var(--accent-gold); box-shadow: 0 0 8px var(--accent-gold); }
+
+        /* Quest Inputs */
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        input[type="number"], input[type="text"] {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: rgba(0, 168, 255, 0.2);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .btn:active {
+            background: var(--border-color);
+            color: #000;
+        }
+
+        .btn-danger {
+            border-color: var(--accent-red);
+            background: rgba(255, 51, 102, 0.2);
+        }
+
+        /* Notification Popup */
+        #notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(5, 11, 20, 0.95);
+            border: 1px solid var(--accent-glow);
+            box-shadow: 0 0 20px var(--accent-glow);
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-align: center;
+            z-index: 1000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+
+        #notification.show {
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
-<body class="min-h-screen pb-20">
-    <div id="root"></div>
+<body>
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    <div id="notification">
+        <div id="notif-title" style="color: var(--accent-glow); font-weight: bold; font-size: 14px;">QUEST COMPLETE</div>
+        <div id="notif-desc" style="font-size: 12px; margin-top: 4px;">+1.0 INT | +10 MP</div>
+    </div>
 
-        // Sound System using Web Audio API
-        const createAudioContext = () => {
-            const AudioCtx = window.AudioContext || window.webkitAudioContext;
-            if (!AudioCtx) return null;
-            return new AudioCtx();
+    <!-- TAB 1: DASHBOARD -->
+    <div id="tab-dashboard" class="tab-content active">
+        <div class="system-panel">
+            <div class="panel-title">
+                <span>STATUS HUD</span>
+                <span id="player-lvl">LVL 1</span>
+            </div>
+            <div class="rank-header">
+                <div class="rank-badge" id="player-rank">E-RANK</div>
+                <div class="rank-title" id="player-title">NOVICE HUNTER</div>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <div class="bar-container">
+                    <div class="bar-label"><span>HP (HEALTH)</span><span id="hp-text">100 / 100</span></div>
+                    <div class="bar-bg"><div id="hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div></div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-label"><span>MP (MANA / RANG)</span><span id="mp-text">0 / 100</span></div>
+                    <div class="bar-bg"><div id="mp-bar" class="bar-fill mp-fill" style="width: 0%;"></div></div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-label"><span>EXP</span><span id="xp-text">0 / 100</span></div>
+                    <div class="bar-bg"><div id="xp-bar" class="bar-fill xp-fill" style="width: 0%;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="system-panel">
+            <div class="panel-title">STATS</div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-name">STRENGTH</div>
+                    <div class="stat-val" id="stat-str">10.0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-name">ENDURANCE</div>
+                    <div class="stat-val" id="stat-end">10.0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-name">INTELLIGENCE</div>
+                    <div class="stat-val" id="stat-int">10.0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-name">FOCUS (ANTI-ADHD)</div>
+                    <div class="stat-val" id="stat-foc">10.0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="system-panel" style="display: flex; justify-content: space-between; align-items: center;">
+            <button class="btn" onclick="exportData()">💾 SAVE BACKUP</button>
+            <button class="btn" onclick="document.getElementById('file-input').click()">📂 LOAD BACKUP</button>
+            <input type="file" id="file-input" style="display: none;" onchange="importData(event)">
+        </div>
+    </div>
+
+    <!-- TAB 2: QUESTS -->
+    <div id="tab-quests" class="tab-content">
+        <div class="system-panel">
+            <div class="panel-title">DAILY QUEST: LESEN (INT)</div>
+            <div style="font-size: 12px; color: #a0c0e0;">1 Seite = +0.1 INT & +1 MP</div>
+            <div class="input-group">
+                <input type="number" id="pages-input" placeholder="Seiten gelesen...">
+                <button class="btn" onclick="logReading()">TRACK</button>
+            </div>
+        </div>
+
+        <div class="system-panel">
+            <div class="panel-title">DAILY QUEST: WORKOUTS</div>
+            <div style="display: flex; gap: 8px; margin-top: 8px;">
+                <button class="btn" style="flex: 1;" onclick="addStat('str', 1.0, 15, 'Gym Session (+1.0 STR)')">🏋️ GYM (+1 STR)</button>
+                <button class="btn" style="flex: 1;" onclick="addStat('end', 1.0, 15, 'Schwimmen (+1.0 END)')">🏊 SCHWIMMEN (+1 END)</button>
+            </div>
+        </div>
+
+        <div class="system-panel">
+            <div class="panel-title">DEEP WORK TIMER (FOC & INT)</div>
+            <div style="text-align: center; margin: 10px 0;">
+                <div id="timer-display" style="font-size: 32px; font-weight: bold; letter-spacing: 2px;">25:00</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn" style="flex: 1;" onclick="toggleTimer()" id="timer-btn">START FOKUS</button>
+                <button class="btn btn-danger" onclick="resetTimer()">RESET</button>
+            </div>
+        </div>
+
+        <div class="system-panel" style="border-color: var(--accent-red);">
+            <div class="panel-title" style="color: var(--accent-red);">PENALTY QUEST (DEBUFFS)</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="btn btn-danger" style="flex: 1;" onclick="applyPenalty('foc', 0.5, 10, 'Ablenkung (-0.5 FOC)')">📱 Social Media (-FOC)</button>
+                <button class="btn btn-danger" style="flex: 1;" onclick="applyPenalty('str', 1.0, 20, 'Gym geschwänzt (-1 STR)')">🛋️ Faulheit (-STR)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: BOSS DUNGEON -->
+    <div id="tab-boss" class="tab-content">
+        <div class="system-panel" style="text-align: center;">
+            <div class="panel-title" style="justify-content: center;">GATE RANK: E-DUNGEON</div>
+            <div style="font-size: 22px; font-weight: bold; color: var(--accent-red); margin: 10px 0;">GOBLIN LEADER</div>
+            <div class="bar-container">
+                <div class="bar-label"><span>BOSS HP</span><span id="boss-hp-text">500 / 500</span></div>
+                <div class="bar-bg"><div id="boss-hp-bar" class="bar-fill hp-fill" style="width: 100%;"></div></div>
+            </div>
+            <button class="btn btn-danger" style="width: 100%; margin-top: 15px; padding: 12px;" onclick="attackBoss()">⚔️ ATTACK BOSS</button>
+        </div>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('dashboard')">
+            <span>🛡️</span> STATUS
+        </button>
+        <button class="tab-btn" onclick="switchTab('quests')">
+            <span>⚡</span> QUESTS
+        </button>
+        <button class="tab-btn" onclick="switchTab('boss')">
+            <span>⚔️</span> DUNGEON
+        </button>
+    </div>
+
+    <script>
+        // Game State
+        let state = {
+            level: 1,
+            xp: 0,
+            xpMax: 100,
+            mp: 0,
+            mpMax: 100,
+            hp: 100,
+            hpMax: 100,
+            stats: { str: 10.0, end: 10.0, int: 10.0, foc: 10.0 },
+            bossHp: 500,
+            bossHpMax: 500
         };
 
-        const playSound = (type, soundEnabled = true) => {
-            if (!soundEnabled) return;
-            try {
-                const ctx = createAudioContext();
-                if (!ctx) return;
-                
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-
-                const now = ctx.currentTime;
-
-                if (type === 'quest_complete') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(440, now);
-                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-                    osc.start(now);
-                    osc.stop(now + 0.2);
-                } else if (type === 'penalty') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(300, now);
-                    osc.frequency.exponentialRampToValueAtTime(120, now + 0.3);
-                    gain.gain.setValueAtTime(0.4, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                    osc.start(now);
-                    osc.stop(now + 0.3);
-                } else if (type === 'level_up') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(261.63, now); // C4
-                    osc.frequency.setValueAtTime(329.63, now + 0.1); // E4
-                    osc.frequency.setValueAtTime(392.00, now + 0.2); // G4
-                    osc.frequency.setValueAtTime(523.25, now + 0.3); // C5
-                    gain.gain.setValueAtTime(0.4, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
-                    osc.start(now);
-                    osc.stop(now + 0.6);
-                } else if (type === 'boss_hit') {
-                    osc.type = 'square';
-                    osc.frequency.setValueAtTime(150, now);
-                    osc.frequency.exponentialRampToValueAtTime(40, now + 0.15);
-                    gain.gain.setValueAtTime(0.5, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-                    osc.start(now);
-                    osc.stop(now + 0.15);
-                }
-            } catch (e) {
-                console.log("Audio not allowed yet", e);
-            }
-        };
-
-        // Rank Calculation Logic
-        const getRankTitle = (level) => {
-            if (level >= 50) return { title: 'Shadow Monarch', rank: 'EX-RANK', color: 'text-amber-400 border-amber-400' };
-            if (level >= 35) return { title: 'National Level Hunter', rank: 'S-RANK', color: 'text-purple-400 border-purple-400' };
-            if (level >= 25) return { title: 'High Guild Master', rank: 'A-RANK', color: 'text-cyan-400 border-cyan-400' };
-            if (level >= 15) return { title: 'Elite Raid Member', rank: 'B-RANK', color: 'text-blue-400 border-blue-400' };
-            if (level >= 8)  return { title: 'Experienced Hunter', rank: 'C-RANK', color: 'text-emerald-400 border-emerald-400' };
-            if (level >= 3)  return { title: 'Novice Hunter', rank: 'D-RANK', color: 'text-yellow-400 border-yellow-400' };
-            return { title: 'Weakest Hunter', rank: 'E-RANK', color: 'text-gray-400 border-gray-400' };
-        };
-
-        // Initial Bosses List
-        const INITIAL_BOSSES = [
-            {
-                id: 'boss_1',
-                name: 'C-Rank Gate: Razan The Viper',
-                reqLevel: 3,
-                reqStat: { name: 'STR', val: 5 },
-                maxHp: 50,
-                currentHp: 50,
-                defeated: false,
-                rewardTitle: 'Viper Slayer',
-                rewardXp: 150,
-                desc: 'Ein riesiger Schlangen-Monarch aus dem C-Rang Gate. Benötigt Ausdauer und Stärke.'
-            },
-            {
-                id: 'boss_2',
-                name: 'B-Rank Gate: Demon King\'s Commander',
-                reqLevel: 8,
-                reqStat: { name: 'FOC', val: 12 },
-                maxHp: 120,
-                currentHp: 120,
-                defeated: false,
-                rewardTitle: 'Mind Shield Master',
-                rewardXp: 350,
-                desc: 'Ein Dämon, der deine Aufmerksamkeit testet. Benötigt Fokus & Intelligenz.'
-            },
-            {
-                id: 'boss_3',
-                name: 'S-Rank Gate: Ant King Beru',
-                reqLevel: 15,
-                reqStat: { name: 'INT', val: 25 },
-                maxHp: 300,
-                currentHp: 300,
-                defeated: false,
-                rewardTitle: 'Shadow Monarch\'s Right Hand',
-                rewardXp: 1000,
-                desc: 'Der schrecklichste Feind. Nur wer seinen Geist und Körper perfektioniert hat, kann siegreich sein.'
-            }
+        const ranks = [
+            { mp: 0, name: "E-RANK", title: "Novice Hunter" },
+            { mp: 100, name: "D-RANK", title: "Rookie Hunter" },
+            { mp: 300, name: "C-RANK", title: "Veteran Hunter" },
+            { mp: 600, name: "B-RANK", title: "Elite Hunter" },
+            { mp: 1000, name: "A-RANK", title: "High-Rank Hunter" },
+            { mp: 2000, name: "S-RANK", title: "Shadow Lord" },
+            { mp: 5000, name: "SHADOW MONARCH", title: "Monarch of Shadows" }
         ];
 
-        function App() {
-            // Player Main State
-            const [player, setPlayer] = useState(() => {
-                const saved = localStorage.getItem('sl_player');
-                return saved ? JSON.parse(saved) : {
-                    name: 'Sung Jin-Woo',
-                    level: 1,
-                    xp: 0,
-                    maxXp: 100,
-                    hp: 100,
-                    maxHp: 100,
-                    stats: {
-                        STR: 1.0, // Strength (Gym / Sport)
-                        END: 1.0, // Endurance (Swim / Cardio)
-                        INT: 1.0, // Intelligence (Reading / Study)
-                        FOC: 1.0  // Focus (ADHD Anti-Scroll / Pomodoro)
-                    },
-                    soundEnabled: true,
-                    equippedTitle: null
-                };
-            });
-
-            // Bosses State
-            const [bosses, setBosses] = useState(() => {
-                const saved = localStorage.getItem('sl_bosses');
-                return saved ? JSON.parse(saved) : INITIAL_BOSSES;
-            });
-
-            // Activity Log
-            const [logs, setLogs] = useState(() => {
-                const saved = localStorage.getItem('sl_logs');
-                return saved ? JSON.parse(saved) : [
-                    { id: 1, text: 'Das System ist erwacht. Erfüll tägliche Quests!', time: 'System', type: 'sys' }
-                ];
-            });
-
-            // Navigation Tabs
-            const [activeTab, setActiveTab] = useState('quests'); // 'quests', 'stats', 'bosses', 'timer'
-
-            // Dynamic Inputs
-            const [pagesRead, setPagesRead] = useState('');
-            const [customTaskTitle, setCustomTaskTitle] = useState('');
-            const [customTaskStat, setCustomTaskStat] = useState('INT');
-            const [customTaskValue, setCustomTaskValue] = useState('0.5');
-
-            // Level Up Popup Modal State
-            const [showLevelUpModal, setShowLevelUpModal] = useState(false);
-            const [newLevel, setNewLevel] = useState(1);
-
-            // Focus Timer State (ADHD Feature)
-            const [timerSeconds, setTimerSeconds] = useState(25 * 60);
-            const [isTimerRunning, setIsTimerRunning] = useState(false);
-            const [timerMode, setTimerMode] = useState('work'); // 'work' or 'break'
-
-            // Active Boss Fight State
-            const [activeBossModal, setActiveBossModal] = useState(null);
-            const [bossShake, setBossShake] = useState(false);
-
-            // Save to LocalStorage
-            useEffect(() => {
-                localStorage.setItem('sl_player', JSON.stringify(player));
-            }, [player]);
-
-            useEffect(() => {
-                localStorage.setItem('sl_bosses', JSON.stringify(bosses));
-            }, [bosses]);
-
-            useEffect(() => {
-                localStorage.setItem('sl_logs', JSON.stringify(logs));
-            }, [logs]);
-
-            // Icons initializer
-            useEffect(() => {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            });
-
-            // Timer Tick Logic
-            useEffect(() => {
-                let interval = null;
-                if (isTimerRunning && timerSeconds > 0) {
-                    interval = setInterval(() => {
-                        setTimerSeconds((prev) => prev - 1);
-                    }, 1000);
-                } else if (timerSeconds === 0 && isTimerRunning) {
-                    setIsTimerRunning(false);
-                    if (timerMode === 'work') {
-                        addReward({ FOC: 1.5, INT: 0.5 }, 40, '25 Min Deep Work Session beendet!');
-                        playSound('level_up', player.soundEnabled);
-                    }
-                }
-                return () => clearInterval(interval);
-            }, [isTimerRunning, timerSeconds, timerMode]);
-
-            // Log Add Helper
-            const addLog = (text, type = 'info') => {
-                const newEntry = {
-                    id: Date.now(),
-                    text,
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    type
-                };
-                setLogs((prev) => [newEntry, ...prev.slice(0, 29)]);
-            };
-
-            // XP and Stat Reward Handler
-            const addReward = (statGains, xpGain, description) => {
-                setPlayer((prev) => {
-                    let newXp = prev.xp + xpGain;
-                    let newLevel = prev.level;
-                    let newMaxXp = prev.maxXp;
-                    let leveledUp = false;
-
-                    while (newXp >= newMaxXp) {
-                        newXp -= newMaxXp;
-                        newLevel += 1;
-                        newMaxXp = Math.floor(newMaxXp * 1.4);
-                        leveledUp = true;
-                    }
-
-                    const updatedStats = { ...prev.stats };
-                    Object.keys(statGains).forEach((key) => {
-                        updatedStats[key] = parseFloat((updatedStats[key] + statGains[key]).toFixed(2));
-                    });
-
-                    if (leveledUp) {
-                        setNewLevel(newLevel);
-                        setShowLevelUpModal(true);
-                        playSound('level_up', prev.soundEnabled);
-                        addLog(`LEVEL UP! Du bist jetzt Level ${newLevel}!`, 'level');
-                    } else {
-                        playSound('quest_complete', prev.soundEnabled);
-                    }
-
-                    return {
-                        ...prev,
-                        level: newLevel,
-                        xp: newXp,
-                        maxXp: newMaxXp,
-                        hp: Math.min(prev.maxHp, prev.hp + 5), // auto-heal a bit
-                        stats: updatedStats
-                    };
-                });
-
-                addLog(`${description} (+${xpGain} XP)`, 'success');
-            };
-
-            // Penalty / Minus Stats Handler
-            const applyPenalty = (statLosses, hpLoss, description) => {
-                setPlayer((prev) => {
-                    const updatedStats = { ...prev.stats };
-                    Object.keys(statLosses).forEach((key) => {
-                        updatedStats[key] = Math.max(0.1, parseFloat((updatedStats[key] - statLosses[key]).toFixed(2)));
-                    });
-
-                    const newHp = Math.max(0, prev.hp - hpLoss);
-                    return {
-                        ...prev,
-                        hp: newHp,
-                        stats: updatedStats
-                    };
-                });
-
-                playSound('penalty', player.soundEnabled);
-                addLog(`PENALTY: ${description} (-${hpLoss} HP)`, 'penalty');
-            };
-
-            // Specific Action Quick Logs
-            const handleReadPages = () => {
-                const count = parseFloat(pagesRead);
-                if (isNaN(count) || count <= 0) return;
-                const intGain = parseFloat((count * 0.1).toFixed(2));
-                const xpGain = Math.round(count * 2.5);
-                addReward({ INT: intGain }, xpGain, `${count} Seiten gelesen (+${intGain} INT)`);
-                setPagesRead('');
-            };
-
-            // Boss Attack Logic
-            const attackBoss = (boss) => {
-                // Calculate damage based on Stats
-                const totalPower = (player.stats.STR * 2) + (player.stats.INT * 1.5) + (player.stats.FOC * 1.5) + (player.stats.END * 1.2);
-                const damage = Math.max(5, Math.floor(totalPower));
-
-                setBossShake(true);
-                setTimeout(() => setBossShake(false), 400);
-                playSound('boss_hit', player.soundEnabled);
-
-                setBosses((prev) => prev.map((b) => {
-                    if (b.id === boss.id) {
-                        const newHp = Math.max(0, b.currentHp - damage);
-                        const isDefeated = newHp === 0;
-
-                        if (isDefeated && !b.defeated) {
-                            setTimeout(() => {
-                                addReward({ STR: 2, INT: 2, FOC: 2, END: 2 }, b.rewardXp, `BOSS BESIEGT: ${b.name}!`);
-                                if (b.rewardTitle) {
-                                    setPlayer((p) => ({ ...p, equippedTitle: b.rewardTitle }));
-                                }
-                            }, 300);
-                        }
-
-                        return { ...b, currentHp: newHp, defeated: isDefeated };
-                    }
-                    return b;
-                }));
-
-                addLog(`KAMPF: ${damage} Schaden an ${boss.name} verursacht!`, 'battle');
-            };
-
-            const rankInfo = getRankTitle(player.level);
-
-            return (
-                <div className="max-w-md mx-auto min-h-screen px-3 py-4 flex flex-col justify-between relative">
-                    
-                    {/* Header / Player Profile HUD */}
-                    <div className="system-glass rounded-xl p-4 mb-4 relative overflow-hidden animate-pulse-glow">
-                        <div className="flex items-center justify-between border-b border-system-border/30 pb-3 mb-3">
-                            <div>
-                                <div className="flex items-center space-x-2">
-                                    <h1 className="text-xl font-bold tracking-wider text-cyan-300 drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">
-                                        {player.name}
-                                    </h1>
-                                    <button 
-                                        onClick={() => {
-                                            const newName = prompt('Dein Name:', player.name);
-                                            if (newName) setPlayer(p => ({ ...p, name: newName }));
-                                        }}
-                                        className="text-xs text-cyan-500 hover:text-cyan-300"
-                                    >
-                                        <i data-lucide="edit-2" className="w-3 h-3"></i>
-                                    </button>
-                                </div>
-                                <p className="text-xs text-gray-400 mt-0.5">
-                                    {player.equippedTitle || rankInfo.title}
-                                </p>
-                            </div>
-                            <div className="text-right">
-                                <span className={`inline-block px-2 py-0.5 text-xs font-black tracking-widest border rounded ${rankInfo.color} shadow-[0_0_10px_rgba(0,240,255,0.2)]`}>
-                                    {rankInfo.rank}
-                                </span>
-                                <div className="text-xs font-mono text-cyan-400 mt-1">LVL {player.level}</div>
-                            </div>
-                        </div>
-
-                        {/* HP Bar */}
-                        <div className="mb-2">
-                            <div className="flex justify-between text-xs font-mono mb-1">
-                                <span className="text-red-400 flex items-center gap-1">
-                                    <i data-lucide="heart" className="w-3 h-3 fill-red-500"></i> HP
-                                </span>
-                                <span className="text-red-300">{player.hp} / {player.maxHp}</span>
-                            </div>
-                            <div className="w-full bg-slate-900/80 rounded-full h-2 border border-red-500/30 overflow-hidden">
-                                <div 
-                                    className="bg-gradient-to-r from-red-600 to-red-400 h-full transition-all duration-300 shadow-[0_0_8px_rgba(255,0,0,0.5)]"
-                                    style={{ width: `${(player.hp / player.maxHp) * 100}%` }}
-                                ></div>
-                            </div>
-                        </div>
-
-                        {/* XP Progress Bar */}
-                        <div>
-                            <div className="flex justify-between text-xs font-mono mb-1">
-                                <span className="text-cyan-400 flex items-center gap-1">
-                                    <i data-lucide="zap" className="w-3 h-3 fill-cyan-400"></i> SYSTEM XP
-                                </span>
-                                <span className="text-cyan-300">{player.xp} / {player.maxXp} XP</span>
-                            </div>
-                            <div className="w-full bg-slate-900/80 rounded-full h-2.5 border border-cyan-500/30 overflow-hidden">
-                                <div 
-                                    className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 h-full transition-all duration-300 shadow-[0_0_12px_rgba(0,240,255,0.8)]"
-                                    style={{ width: `${Math.min(100, (player.xp / player.maxXp) * 100)}%` }}
-                                ></div>
-                            </div>
-                        </div>
-
-                        {/* Quick Stat Bar Grid */}
-                        <div className="grid grid-cols-4 gap-1.5 mt-3 pt-3 border-t border-system-border/20 text-center font-mono">
-                            <div className="bg-slate-900/60 p-1.5 rounded border border-cyan-500/20">
-                                <div className="text-[10px] text-gray-400">STR</div>
-                                <div className="text-sm font-bold text-cyan-300">{player.stats.STR}</div>
-                            </div>
-                            <div className="bg-slate-900/60 p-1.5 rounded border border-cyan-500/20">
-                                <div className="text-[10px] text-gray-400">END</div>
-                                <div className="text-sm font-bold text-emerald-400">{player.stats.END}</div>
-                            </div>
-                            <div className="bg-slate-900/60 p-1.5 rounded border border-cyan-500/20">
-                                <div className="text-[10px] text-gray-400">INT</div>
-                                <div className="text-sm font-bold text-purple-300">{player.stats.INT}</div>
-                            </div>
-                            <div className="bg-slate-900/60 p-1.5 rounded border border-cyan-500/20">
-                                <div className="text-[10px] text-gray-400">FOC</div>
-                                <div className="text-sm font-bold text-amber-300">{player.stats.FOC}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* MAIN TAB CONTENT */}
-                    <div className="flex-1 pb-4">
-                        {/* TAB 1: DAILY QUESTS & LOGGING */}
-                        {activeTab === 'quests' && (
-                            <div className="space-y-4">
-
-                                {/* Reading Page Counter Quick Entry */}
-                                <div className="system-glass rounded-xl p-4">
-                                    <h2 className="text-sm font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-                                        <i data-lucide="book-open" className="w-4 h-4 text-purple-400"></i>
-                                        Buch Lesen (+INT)
-                                    </h2>
-                                    <p className="text-xs text-gray-400 mb-3">10 Seiten = +1.0 INT | 1 Seite = +0.1 INT</p>
-                                    <div className="flex gap-2">
-                                        <input 
-                                            type="number" 
-                                            placeholder="Gelesene Seiten..."
-                                            value={pagesRead}
-                                            onChange={(e) => setPagesRead(e.target.value)}
-                                            className="bg-slate-950 border border-cyan-500/40 rounded px-3 py-2 text-sm text-cyan-100 flex-1 focus:outline-none focus:border-cyan-400 font-mono"
-                                        />
-                                        <button 
-                                            onClick={handleReadPages}
-                                            className="system-btn bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-4 py-2 text-sm"
-                                        >
-                                            Loggen
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* Fitness & Activity Quick Buttons */}
-                                <div className="system-glass rounded-xl p-4">
-                                    <h2 className="text-sm font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2 mb-3">
-                                        <i data-lucide="dumbbell" className="w-4 h-4 text-cyan-400"></i>
-                                        Fitness & Workout
-                                    </h2>
-                                    <div className="grid grid-cols-2 gap-2">
-                                        <button 
-                                            onClick={() => addReward({ STR: 1.0, END: 0.2 }, 35, 'Gym Session absolviert')}
-                                            className="system-btn bg-slate-900 border border-cyan-500/40 p-3 rounded text-left hover:border-cyan-300 group"
-                                        >
-                                            <div className="text-xs font-bold text-cyan-300 group-hover:text-cyan-200">Krafttraining / Gym</div>
-                                            <div className="text-[10px] text-gray-400 mt-1">+1.0 STR | +35 XP</div>
-                                        </button>
-                                        <button 
-                                            onClick={() => addReward({ END: 1.0, STR: 0.2 }, 35, 'Schwimmtraining / Cardio')}
-                                            className="system-btn bg-slate-900 border border-emerald-500/40 p-3 rounded text-left hover:border-emerald-300 group"
-                                        >
-                                            <div className="text-xs font-bold text-emerald-300 group-hover:text-emerald-200">Schwimmen / Ausdauer</div>
-                                            <div className="text-[10px] text-gray-400 mt-1">+1.0 END | +35 XP</div>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* ANTI-ADHD / PENALTY SYSTEM */}
-                                <div className="system-glass-red rounded-xl p-4">
-                                    <h2 className="text-sm font-bold text-red-400 uppercase tracking-widest flex items-center gap-2 mb-1">
-                                        <i data-lucide="alert-triangle" className="w-4 h-4 text-red-400"></i>
-                                        Penalty Zone (ADHD & Slacking)
-                                    </h2>
-                                    <p className="text-xs text-red-300/80 mb-3">Fehler ziehen wertvolle Stats & HP ab. Bleib diszipliniert!</p>
-                                    
-                                    <div className="grid grid-cols-2 gap-2">
-                                        <button 
-                                            onClick={() => applyPenalty({ STR: 0.5, END: 0.5 }, 15, 'Gym faul geschwänzt')}
-                                            className="system-btn bg-red-950/40 border border-red-500/40 p-2.5 rounded text-left hover:bg-red-900/40"
-                                        >
-                                            <div className="text-xs font-bold text-red-300">Gym Geschwänzt</div>
-                                            <div className="text-[10px] text-red-400/80 mt-0.5">-0.5 STR | -15 HP</div>
-                                        </button>
-                                        <button 
-                                            onClick={() => applyPenalty({ FOC: 0.5, INT: 0.2 }, 10, 'Doomscrolling / Ablenkung')}
-                                            className="system-btn bg-red-950/40 border border-red-500/40 p-2.5 rounded text-left hover:bg-red-900/40"
-                                        >
-                                            <div className="text-xs font-bold text-red-300">Social Media Rausch</div>
-                                            <div className="text-[10px] text-red-400/80 mt-0.5">-0.5 FOC | -10 HP</div>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* Custom Task Logging */}
-                                <div className="system-glass rounded-xl p-4">
-                                    <h2 className="text-sm font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-                                        <i data-lucide="plus-circle" className="w-4 h-4 text-cyan-400"></i>
-                                        Eigene Aufgabe Erstellen
-                                    </h2>
-                                    <div className="space-y-2">
-                                        <input 
-                                            type="text" 
-                                            placeholder="z. B. 1Std Lernen / Meditation..."
-                                            value={customTaskTitle}
-                                            onChange={(e) => setCustomTaskTitle(e.target.value)}
-                                            className="w-full bg-slate-950 border border-cyan-500/40 rounded px-3 py-2 text-sm text-cyan-100 focus:outline-none focus:border-cyan-400"
-                                        />
-                                        <div className="flex gap-2">
-                                            <select 
-                                                value={customTaskStat}
-                                                onChange={(e) => setCustomTaskStat(e.target.value)}
-                                                className="bg-slate-950 border border-cyan-500/40 rounded px-2 py-1.5 text-xs text-cyan-300 font-mono"
-                                            >
-                                                <option value="INT">INT (Geist)</option>
-                                                <option value="STR">STR (Stärke)</option>
-                                                <option value="FOC">FOC (Fokus)</option>
-                                                <option value="END">END (Ausdauer)</option>
-                                            </select>
-                                            <input 
-                                                type="number"
-                                                step="0.1"
-                                                value={customTaskValue}
-                                                onChange={(e) => setCustomTaskValue(e.target.value)}
-                                                className="w-20 bg-slate-950 border border-cyan-500/40 rounded px-2 py-1.5 text-xs text-cyan-100 font-mono"
-                                            />
-                                            <button 
-                                                onClick={() => {
-                                                    if (!customTaskTitle) return;
-                                                    const val = parseFloat(customTaskValue) || 0.5;
-                                                    addReward({ [customTaskStat]: val }, Math.round(val * 20), customTaskTitle);
-                                                    setCustomTaskTitle('');
-                                                }}
-                                                className="system-btn bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-1.5 text-xs flex-1"
-                                            >
-                                                Erledigt!
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        )}
-
-                        {/* TAB 2: FOCUS TIMER (ANTI-ADHD) */}
-                        {activeTab === 'timer' && (
-                            <div className="system-glass rounded-xl p-6 text-center space-y-6">
-                                <div>
-                                    <h2 className="text-lg font-bold text-cyan-300 tracking-wider">ANTI-ADHD FOKUS GATE</h2>
-                                    <p className="text-xs text-gray-400">Kein Handy-Wechsel. Volle Konzentration garantiert Bonus-Stats.</p>
-                                </div>
-
-                                {/* Timer Countdown Display */}
-                                <div className="relative w-48 h-48 mx-auto flex items-center justify-center rounded-full border-4 border-cyan-500/30 shadow-[0_0_30px_rgba(0,240,255,0.2)] bg-slate-950/80">
-                                    <div className="text-4xl font-mono font-bold text-cyan-400 tracking-wider">
-                                        {Math.floor(timerSeconds / 60).toString().padStart(2, '0')}:
-                                        {(timerSeconds % 60).toString().padStart(2, '0')}
-                                    </div>
-                                </div>
-
-                                {/* Controls */}
-                                <div className="flex justify-center gap-3">
-                                    <button 
-                                        onClick={() => setIsTimerRunning(!isTimerRunning)}
-                                        className={`system-btn px-6 py-3 font-bold text-sm text-slate-950 ${isTimerRunning ? 'bg-amber-400' : 'bg-cyan-400 hover:bg-cyan-300'}`}
-                                    >
-                                        {isTimerRunning ? 'PAUSIEREN' : 'FOKUS STARTEN'}
-                                    </button>
-                                    <button 
-                                        onClick={() => {
-                                            setIsTimerRunning(false);
-                                            setTimerSeconds(25 * 60);
-                                        }}
-                                        className="system-btn bg-slate-800 border border-gray-600 px-4 py-3 text-xs text-gray-300"
-                                    >
-                                        RESET
-                                    </button>
-                                </div>
-
-                                <div className="grid grid-cols-3 gap-2 pt-4 border-t border-cyan-500/20">
-                                    <button 
-                                        onClick={() => { setIsTimerRunning(false); setTimerSeconds(15 * 60); }}
-                                        className="py-2 bg-slate-900 border border-cyan-500/30 rounded text-xs text-cyan-300"
-                                    >
-                                        15 Min (+0.8 FOC)
-                                    </button>
-                                    <button 
-                                        onClick={() => { setIsTimerRunning(false); setTimerSeconds(25 * 60); }}
-                                        className="py-2 bg-slate-900 border border-cyan-500/30 rounded text-xs text-cyan-300"
-                                    >
-                                        25 Min (+1.5 FOC)
-                                    </button>
-                                    <button 
-                                        onClick={() => { setIsTimerRunning(false); setTimerSeconds(45 * 60); }}
-                                        className="py-2 bg-slate-900 border border-cyan-500/30 rounded text-xs text-cyan-300"
-                                    >
-                                        45 Min (+3.0 FOC)
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* TAB 3: BOSS BATTLES / DUNGEONS */}
-                        {activeTab === 'bosses' && (
-                            <div className="space-y-4">
-                                <div className="text-center mb-2">
-                                    <h2 className="text-lg font-bold text-red-400 tracking-wider">GATE BOSS DUNGEONS</h2>
-                                    <p className="text-xs text-gray-400">Nutze deine aufgebauten Stats, um Boss-Monster zu erschlagen!</p>
-                                </div>
-
-                                {bosses.map((boss) => {
-                                    const meetsLevel = player.level >= boss.reqLevel;
-                                    const meetsStat = player.stats[boss.reqStat.name] >= boss.reqStat.val;
-                                    const canFight = meetsLevel && meetsStat;
-
-                                    return (
-                                        <div 
-                                            key={boss.id} 
-                                            className={`rounded-xl p-4 transition-all ${boss.defeated ? 'system-glass-gold' : canFight ? 'system-glass-red' : 'bg-slate-950/60 border border-gray-800 opacity-70'}`}
-                                        >
-                                            <div className="flex justify-between items-start mb-2">
-                                                <div>
-                                                    <span className="text-[10px] uppercase font-mono tracking-widest text-red-400">
-                                                        {boss.defeated ? '✔ BEZWUNGEN' : 'DUNGEON BOSS'}
-                                                    </span>
-                                                    <h3 className="font-bold text-base text-gray-100">{boss.name}</h3>
-                                                </div>
-                                                <span className="text-xs font-mono px-2 py-1 bg-red-950 border border-red-500/40 text-red-300 rounded">
-                                                    HP: {boss.currentHp} / {boss.maxHp}
-                                                </span>
-                                            </div>
-
-                                            <p className="text-xs text-gray-400 mb-3">{boss.desc}</p>
-
-                                            {/* Boss Requirements Check */}
-                                            <div className="flex gap-3 text-xs font-mono mb-3 bg-slate-950/50 p-2 rounded border border-gray-800">
-                                                <span className={meetsLevel ? 'text-emerald-400' : 'text-red-400'}>
-                                                    Req. Level {boss.reqLevel}
-                                                </span>
-                                                <span className={meetsStat ? 'text-emerald-400' : 'text-red-400'}>
-                                                    Req. {boss.reqStat.name} ≥ {boss.reqStat.val} (Du: {player.stats[boss.reqStat.name]})
-                                                </span>
-                                            </div>
-
-                                            {/* Battle Action */}
-                                            {boss.defeated ? (
-                                                <div className="text-xs text-amber-400 font-bold flex items-center gap-1">
-                                                    <i data-lucide="award" className="w-4 h-4"></i> Titel Belohnung: {boss.rewardTitle}
-                                                </div>
-                                            ) : canFight ? (
-                                                <button 
-                                                    onClick={() => attackBoss(boss)}
-                                                    className="system-btn w-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-bold py-2 text-xs tracking-wider flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,42,109,0.5)]"
-                                                >
-                                                    <i data-lucide="sword" className="w-4 h-4"></i> BOSS ANGREIFEN!
-                                                </button>
-                                            ) : (
-                                                <div className="text-xs text-gray-500 italic">
-                                                    Anforderungen noch nicht erfüllt. Erhöhe deine Stats!
-                                                </div>
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        )}
-
-                        {/* TAB 4: SYSTEM LOGS & SETTINGS */}
-                        {activeTab === 'logs' && (
-                            <div className="space-y-4">
-                                <div className="system-glass rounded-xl p-4">
-                                    <h2 className="text-sm font-bold text-cyan-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                        <i data-lucide="history" className="w-4 h-4"></i> System Protokoll
-                                    </h2>
-                                    <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
-                                        {logs.map((log) => (
-                                            <div 
-                                                key={log.id} 
-                                                className={`text-xs p-2 rounded font-mono border-l-2 ${
-                                                    log.type === 'penalty' ? 'bg-red-950/30 border-red-500 text-red-300' :
-                                                    log.type === 'success' ? 'bg-emerald-950/30 border-emerald-500 text-emerald-300' :
-                                                    log.type === 'level' ? 'bg-purple-950/40 border-purple-400 text-purple-200' :
-                                                    'bg-slate-900/40 border-cyan-500 text-cyan-200'
-                                                }`}
-                                            >
-                                                <span className="text-[10px] text-gray-500 mr-2">[{log.time}]</span>
-                                                {log.text}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="system-glass rounded-xl p-4 flex justify-between items-center">
-                                    <div>
-                                        <div className="text-sm font-bold text-cyan-300">System Sound-Effekte</div>
-                                        <div className="text-xs text-gray-400">Sci-Fi Feedback beim Quest-Abschluss</div>
-                                    </div>
-                                    <button 
-                                        onClick={() => setPlayer(p => ({ ...p, soundEnabled: !p.soundEnabled }))}
-                                        className={`px-3 py-1.5 rounded text-xs font-mono font-bold ${player.soundEnabled ? 'bg-cyan-500 text-slate-950' : 'bg-slate-800 text-gray-400'}`}
-                                    >
-                                        {player.soundEnabled ? 'AN' : 'AUS'}
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* BOTTOM NAVIGATION BAR */}
-                    <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-950/90 backdrop-blur-md border-t border-cyan-500/30 px-3 py-2 flex justify-around items-center z-50">
-                        <button 
-                            onClick={() => setActiveTab('quests')}
-                            className={`flex flex-col items-center gap-1 ${activeTab === 'quests' ? 'text-cyan-400 scale-105' : 'text-gray-500'}`}
-                        >
-                            <i data-lucide="check-square" className="w-5 h-5"></i>
-                            <span className="text-[10px] font-mono">Quests</span>
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('timer')}
-                            className={`flex flex-col items-center gap-1 ${activeTab === 'timer' ? 'text-cyan-400 scale-105' : 'text-gray-500'}`}
-                        >
-                            <i data-lucide="timer" className="w-5 h-5"></i>
-                            <span className="text-[10px] font-mono">Fokus</span>
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('bosses')}
-                            className={`flex flex-col items-center gap-1 ${activeTab === 'bosses' ? 'text-cyan-400 scale-105' : 'text-gray-500'}`}
-                        >
-                            <i data-lucide="swords" className="w-5 h-5"></i>
-                            <span className="text-[10px] font-mono">Bosses</span>
-                        </button>
-                        <button 
-                            onClick={() => setActiveTab('logs')}
-                            className={`flex flex-col items-center gap-1 ${activeTab === 'logs' ? 'text-cyan-400 scale-105' : 'text-gray-500'}`}
-                        >
-                            <i data-lucide="scroll" className="w-5 h-5"></i>
-                            <span className="text-[10px] font-mono">Logs</span>
-                        </button>
-                    </div>
-
-                    {/* LEVEL UP MODAL POPUP */}
-                    {showLevelUpModal && (
-                        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-level-up">
-                            <div className="system-glass border-2 border-cyan-400 p-6 rounded-2xl max-w-xs text-center space-y-4 shadow-[0_0_50px_rgba(0,240,255,0.8)]">
-                                <div className="text-xs font-mono text-cyan-400 tracking-widest">SYSTEM NOTIFICATION</div>
-                                <h2 className="text-3xl font-black text-cyan-300 drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]">LEVEL UP!</h2>
-                                <p className="text-sm text-gray-300">Du bist nun <span className="font-bold text-cyan-400">Level {newLevel}</span> erreicht.</p>
-                                <div className="p-3 bg-slate-900/80 rounded border border-cyan-500/30 text-xs font-mono text-cyan-200">
-                                    Deine maximale Kraft nimmt zu!
-                                </div>
-                                <button 
-                                    onClick={() => setShowLevelUpModal(false)}
-                                    className="system-btn w-full bg-cyan-400 text-slate-950 font-bold py-2 rounded text-sm tracking-wider"
-                                >
-                                    AKZEPTIEREN
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
-                </div>
-            );
+        function loadState() {
+            const saved = localStorage.getItem('solo_leveling_state');
+            if(saved) {
+                state = JSON.parse(saved);
+            }
+            updateUI();
         }
 
-        ReactDOM.render(<App />, document.getElementById('root'));
+        function saveState() {
+            localStorage.setItem('solo_leveling_state', JSON.stringify(state));
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('player-lvl').innerText = `LVL ${state.level}`;
+            document.getElementById('stat-str').innerText = state.stats.str.toFixed(1);
+            document.getElementById('stat-end').innerText = state.stats.end.toFixed(1);
+            document.getElementById('stat-int').innerText = state.stats.int.toFixed(1);
+            document.getElementById('stat-foc').innerText = state.stats.foc.toFixed(1);
+
+            document.getElementById('hp-text').innerText = `${Math.round(state.hp)} / ${state.hpMax}`;
+            document.getElementById('hp-bar').style.width = `${(state.hp / state.hpMax) * 100}%`;
+
+            document.getElementById('mp-text').innerText = `${Math.round(state.mp)} / ${state.mpMax}`;
+            document.getElementById('mp-bar').style.width = `${Math.min(100, (state.mp / state.mpMax) * 100)}%`;
+
+            document.getElementById('xp-text').innerText = `${Math.round(state.xp)} / ${state.xpMax}`;
+            document.getElementById('xp-bar').style.width = `${(state.xp / state.xpMax) * 100}%`;
+
+            document.getElementById('boss-hp-text').innerText = `${Math.max(0, Math.round(state.bossHp))} / ${state.bossHpMax}`;
+            document.getElementById('boss-hp-bar').style.width = `${Math.max(0, (state.bossHp / state.bossHpMax) * 100)}%`;
+
+            // Update Rank based on MP
+            let currentRank = ranks[0];
+            let nextRankMp = ranks[1].mp;
+            for(let i = 0; i < ranks.length; i++) {
+                if(state.mp >= ranks[i].mp) {
+                    currentRank = ranks[i];
+                    nextRankMp = ranks[i+1] ? ranks[i+1].mp : ranks[i].mp * 2;
+                }
+            }
+            document.getElementById('player-rank').innerText = currentRank.name;
+            document.getElementById('player-title').innerText = currentRank.title;
+            state.mpMax = nextRankMp;
+        }
+
+        function addStat(type, val, mpGain, msg) {
+            state.stats[type] += val;
+            state.mp += mpGain;
+            state.xp += mpGain * 1.5;
+
+            if(state.xp >= state.xpMax) {
+                state.level++;
+                state.xp -= state.xpMax;
+                state.xpMax = Math.round(state.xpMax * 1.2);
+                showNotif("LEVEL UP!", `Du bist jetzt Level ${state.level}!`);
+            } else {
+                showNotif("QUEST ERFÜLLT", msg);
+            }
+            saveState();
+        }
+
+        function applyPenalty(type, val, hpLoss, msg) {
+            state.stats[type] = Math.max(0, state.stats[type] - val);
+            state.hp = Math.max(0, state.hp - hpLoss);
+            showNotif("PENALTY APPLIED", msg);
+            saveState();
+        }
+
+        function logReading() {
+            const input = document.getElementById('pages-input');
+            const pages = parseFloat(input.value);
+            if(pages && pages > 0) {
+                const intGain = pages * 0.1;
+                const mpGain = Math.round(pages * 1);
+                addStat('int', intGain, mpGain, `${pages} Seiten gelesen (+${intGain.toFixed(1)} INT)`);
+                input.value = '';
+            }
+        }
+
+        function attackBoss() {
+            const damage = (state.stats.str * 2) + (state.stats.int * 1.5);
+            state.bossHp -= damage;
+            if(state.bossHp <= 0) {
+                showNotif("BOSS BESIEGT!", "Du hast den Goblin Leader eliminiert! +100 MP");
+                state.mp += 100;
+                state.bossHp = state.bossHpMax = Math.round(state.bossHpMax * 1.5);
+            } else {
+                showNotif("ANGRIFF!", `Schaden verursacht: ${Math.round(damage)}`);
+            }
+            saveState();
+        }
+
+        // Timer Logic
+        let timerInterval = null;
+        let timeLeft = 25 * 60;
+
+        function toggleTimer() {
+            const btn = document.getElementById('timer-btn');
+            if(timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                btn.innerText = "START FOKUS";
+            } else {
+                btn.innerText = "PAUSE";
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                    const s = (timeLeft % 60).toString().padStart(2, '0');
+                    document.getElementById('timer-display').innerText = `${m}:${s}`;
+                    if(timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        timeLeft = 25 * 60;
+                        btn.innerText = "START FOKUS";
+                        addStat('foc', 1.0, 20, "25 Min Deep Work (+1.0 FOC)");
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            timerInterval = null;
+            timeLeft = 25 * 60;
+            document.getElementById('timer-display').innerText = "25:00";
+            document.getElementById('timer-btn').innerText = "START FOKUS";
+        }
+
+        function showNotif(title, desc) {
+            document.getElementById('notif-title').innerText = title;
+            document.getElementById('notif-desc').innerText = desc;
+            const notif = document.getElementById('notification');
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 2500);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", "solo_leveling_backup.json");
+            dl.click();
+        }
+
+        function importData(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                state = JSON.parse(evt.target.result);
+                saveState();
+                showNotif("DATEN GELADEN", "Spielfortschritt erfolgreich wiederhergestellt!");
+            };
+            reader.readAsText(file);
+        }
+
+        // Init
+        loadState();
     </script>
 </body>
 </html>
